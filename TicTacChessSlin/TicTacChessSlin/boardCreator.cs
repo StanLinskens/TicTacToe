@@ -1,45 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using System;
 
-namespace TicTacChessSlin
+internal class BoardTile
 {
-    internal class BoardTile
+    private string tileName;
+    private int tileID;
+    private Panel panel;
+    private int row;
+    private int col;
+    private string pieceOnTile; // Piece that is on the tile
+    private string spawn; // "White", "Black", or "None"
+
+    // Constructor
+    public BoardTile(Panel panel, string tileName, int tileID, int row, int col, string spawn = "None", string pieceOnTile = "None")
     {
-        private string tileName;
-        private int tileID;
-        private Panel Panel;
+        this.panel = panel;
+        this.tileName = tileName;
+        this.tileID = tileID;
+        this.row = row;
+        this.col = col;
+        this.spawn = spawn;
+        this.pieceOnTile = pieceOnTile;
+    }
 
-        private int row;
-        private int col;
+    // Properties (Getters and Setters)
+    public string TileName { get => tileName; set => tileName = value; }
+    public int TileID { get => tileID; set => tileID = value; }
+    public int Row { get => row; set => row = value; }
+    public int Col { get => col; set => col = value; }
+    public string PieceOnTile { get => pieceOnTile; set => pieceOnTile = value; }
+    public string Spawn { get => spawn; set => spawn = value; }
+    public Panel TilePanel => panel;
 
-        private string pieceOnTile; // Piece that is on the tile
+    // Method to display tile information
+    public void DisplayTileInfo()
+    {
+        Console.WriteLine($"Tile: {tileName} (ID: {tileID}) at [{row}, {col}] contains: {pieceOnTile}, Spawn: {spawn}");
+    }
 
-        // Constructor
-        public BoardTile(Panel Panel, string tileName, int tileID, int row, int col, string pieceOnTile = "None")
-        {
-            this.Panel = Panel;
-            this.tileName = tileName;
-            this.tileID = tileID;
-            this.row = row;
-            this.col = col;
-            this.pieceOnTile = pieceOnTile;
-        }
+    // Method to highlight the tile when a piece can move here
+    public void HighlightTile()
+    {
+        panel.BackColor = System.Drawing.Color.LightGreen;
+    }
 
-        // Properties (Getters and Setters)
-        public string TileName { get => tileName; set => tileName = value; }
-        public int TileID { get => tileID; set => tileID = value; }
-        public int Row { get => row; set => row = value; }
-        public int Col { get => col; set => col = value; }
-        public string PieceOnTile { get => pieceOnTile; set => pieceOnTile = value; }
-
-        // Method to display tile information
-        public void DisplayTileInfo()
-        {
-            Console.WriteLine($"Tile: {tileName} (ID: {tileID}) at [{row}, {col}] contains: {pieceOnTile}");
-        }
+    // Method to reset the tile color
+    public void ResetTileColor()
+    {
+        panel.BackColor = System.Drawing.Color.LightGray;
     }
 }

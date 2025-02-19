@@ -63,12 +63,12 @@ namespace TicTacChessSlin
                 {
                     string tileName = $"{(char)('A' + row)}{col + 1}"; // Example: A1, B2, C3
                     string PanelName = $"pnl{tileName}";
-                    
+
                     Panel newPanel = new Panel();
                     newPanel.Name = tileName;
                     newPanel.Width = 80;
                     newPanel.Height = 80;
-                    newPanel.BackColor = Color.White;
+                    newPanel.BackColor = Color.LightGray;
 
                     // Set the position: top-left panel starts at (BoardStart, BoardStart)
                     newPanel.Location = new Point(
@@ -76,15 +76,21 @@ namespace TicTacChessSlin
                         BoardStartY + row * (newPanel.Height + gap)   // Y position
                     );
 
+                    // Determine spawn zones (assuming the first and last rows are spawn points)
+                    string spawn = "None";
+                    if (row == 0) spawn = "White";  // Top row is white spawn
+                    if (row == gridRow - 1) spawn = "Black"; // Bottom row is black spawn
+
                     // Add panel to the form
                     this.Controls.Add(newPanel);
 
-                    boardGrid[row, col] = new BoardTile(newPanel, tileName, tileID++, row, col);
+                    boardGrid[row, col] = new BoardTile(newPanel, tileName, tileID++, row, col, spawn);
                 }
             }
 
             Console.WriteLine($"Board of size {gridRow}x{gridCol} created.");
         }
+
 
         private void PiecePlacement(object sender, MouseEventArgs e)
         {
@@ -97,15 +103,19 @@ namespace TicTacChessSlin
 
         private void CreateChessPieces()
         {
-            Dictionary<string, (Image, bool)> pieces = new Dictionary<string, (Image, bool)>
+            Dictionary<string, (Image, bool, string)> pieces = new Dictionary<string, (Image, bool, string)>
             {
-                { "Wizard", (Properties.Resources.wizard, true) },
-                { "Witch", (Properties.Resources.witch, false) },
-                { "Prince", (Properties.Resources.prince, true) },
-                { "Dark_Knight", (Properties.Resources.dark_knight, false) },
-                { "Inferno_Tower", (Properties.Resources.inferno_tower, true) },
-                { "Crossbow", (Properties.Resources.crossbow, false) }
+                { "Wizard", (Properties.Resources.wizard, true, "upLeft1,upRight1,downLeft1,downRight1") }, // Bishop-like movement
+                { "Witch", (Properties.Resources.witch, false, "upLeft1,upRight1,downLeft1,downRight1") }, // Bishop-like movement
+
+                { "Prince", (Properties.Resources.prince, true, "up2,left1,up2,right1,down2,left1,down2,right1,left2,up1,left2,down1,right2,up1,right2,down1") }, // Knight's L-movement
+                { "Dark_Knight", (Properties.Resources.dark_knight, false, "up2,left1,up2,right1,down2,left1,down2,right1,left2,up1,left2,down1,right2,up1,right2,down1") }, // Knight's L-movement
+
+                { "Inferno_Tower", (Properties.Resources.inferno_tower, true, "left1,right1,up1,down1") }, // Rook-like movement
+                { "Crossbow", (Properties.Resources.crossbow, false, "left1,right1,up1,down1") } // Rook-like movement
             };
+
+
 
             foreach (var piece in pieces)
             {
@@ -121,7 +131,7 @@ namespace TicTacChessSlin
 
                 this.Controls.Add(piecePanel);
 
-                PieceLibrary.AddPiece(piece.Key, new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0));
+                PieceLibrary.AddOrUpdatePiece(piece.Key, new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3));
             }
         }
 
@@ -164,5 +174,104 @@ namespace TicTacChessSlin
                 DisplayPieces(showTruePieces);
             }
         }
+
+        private void ShowValidMoves(ChessPiece piece)
+        {
+            string[] moves = piece.MoveSet.Split(',');
+            int row = piece.Row;
+            int col = piece.Col;
+
+            foreach (string move in moves)
+            {
+                int newRow = row;
+                int newCol = col;
+
+                // Split combined moves (e.g., "up1-left2")
+                string[] moveParts = move.Split('-');
+
+                foreach (string part in moveParts)
+                {
+                    if (part.StartsWith("left")) newCol -= int.Parse(part.Substring(4));
+                    if (part.StartsWith("right")) newCol += int.Parse(part.Substring(5));
+                    if (part.StartsWith("up")) newRow -= int.Parse(part.Substring(2));
+                    if (part.StartsWith("down")) newRow += int.Parse(part.Substring(4));
+                }
+
+                // Ensure the move stays within the 3x3 grid
+                if (newRow >= 0 && newRow < 3 && newCol >= 0 && newCol < 3)
+                {
+                    boardGrid[newRow, newCol].TilePanel.BackColor = Color.LightGreen; // Highlight moveable tile
+                }
+            }
+        }
+
+        private Point pieceOriginalPosition;
+        private ChessPiece selectedPiece;
+        private bool isDragging = false;
+
+        private void Piece_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is Panel piecePanel)
+            {
+                selectedPiece = PieceLibrary.GetPieceByPanel(piecePanel);
+                if (selectedPiece == null) return;
+
+                isDragging = true;
+                pieceOriginalPosition = piecePanel.Location;
+                piecePanel.BringToFront();
+
+                // Show valid moves
+                ShowValidMoves(selectedPiece);
+            }
+        }
+
+        private void Piece_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging && selectedPiece != null)
+            {
+                // Move piece with the mouse
+                selectedPiece.PiecePanel.Location = new Point(
+                    selectedPiece.PiecePanel.Location.X + e.X - selectedPiece.PiecePanel.Width / 2,
+                    selectedPiece.PiecePanel.Location.Y + e.Y - selectedPiece.PiecePanel.Height / 2
+                );
+            }
+        }
+
+        private void Piece_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!isDragging || selectedPiece == null) return;
+
+            isDragging = false;
+            Panel piecePanel = selectedPiece.PiecePanel;
+            Point dropPosition = piecePanel.Location;
+
+            // Check if dropped on a valid tile
+            BoardTile validTile = null;
+            foreach (var tile in boardGrid)
+            {
+                Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
+                if (tileBounds.Contains(dropPosition))
+                {
+                    validTile = tile;
+                    break;
+                }
+            }
+
+            if (validTile != null)
+            {
+                // Move the piece to the valid tile
+                piecePanel.Location = validTile.TilePanel.Location;
+                selectedPiece.Row = validTile.Row;
+                selectedPiece.Col = validTile.Col;
+            }
+            else
+            {
+                // Snap back to original position
+                piecePanel.Location = pieceOriginalPosition;
+            }
+
+            selectedPiece = null;
+        }
+
     }
 }

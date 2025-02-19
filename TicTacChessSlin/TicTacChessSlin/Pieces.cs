@@ -11,16 +11,19 @@ namespace TicTacChessSlin
         public Image PieceImage { get; set; }  // The image of the piece
         public Panel PiecePanel { get; set; }  // The PiecePanel where the piece is displayed
 
-        public int Row { get; private set; }   // Row position in the grid
-        public int Col { get; private set; }   // Column position in the grid
+        public int Row { get; set; }   // Row position in the grid
+        public int Col { get; set; }   // Column position in the grid
 
-        public ChessPiece(string pieceName, bool isWhite, Panel piecePanel, int row, int col)
+        public string MoveSet { get; private set; }
+
+        public ChessPiece(string pieceName, bool isWhite, Panel piecePanel, int row, int col, string moveset)
         {
             PieceName = pieceName;
             IsWhite = isWhite;
             PiecePanel = piecePanel;
             Row = row;
             Col = col;
+            MoveSet = moveset;
         }
         
         private Point GetGridPosition(int row, int col)

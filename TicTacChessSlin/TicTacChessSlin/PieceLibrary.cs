@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace TicTacChessSlin
 {
@@ -8,29 +10,43 @@ namespace TicTacChessSlin
     {
         private static Dictionary<string, ChessPiece> pieceCollection = new Dictionary<string, ChessPiece>();
 
-        // Method to add a piece to the library
-        public static void AddPiece(string key, ChessPiece piece)
+        // Add or update a piece in the library
+        public static void AddOrUpdatePiece(string key, ChessPiece piece)
         {
-            if (!pieceCollection.ContainsKey(key)) // Avoid duplicates
-            {
-                pieceCollection[key] = piece;
-            }
+            pieceCollection[key] = piece; // Automatically updates if key exists
         }
 
-        // Method to get a piece from the library
-        public static ChessPiece GetPiece(string key)
+        // Remove a piece from the library
+        public static void RemovePiece(string key)
         {
             if (pieceCollection.ContainsKey(key))
             {
-                return pieceCollection[key];
+                pieceCollection.Remove(key);
             }
-            return null; // Return null if piece is not found
         }
 
-        // Method to list all stored pieces
+        // Retrieve a piece by key
+        public static ChessPiece GetPiece(string key)
+        {
+            return pieceCollection.TryGetValue(key, out ChessPiece piece) ? piece : null;
+        }
+
+        // Get all pieces in a list
         public static List<ChessPiece> GetAllPieces()
         {
-            return new List<ChessPiece>(pieceCollection.Values);
+            return pieceCollection.Values.ToList();
+        }
+
+        // Get a piece by its Panel reference
+        public static ChessPiece GetPieceByPanel(Panel panel)
+        {
+            return pieceCollection.Values.FirstOrDefault(piece => piece.PiecePanel == panel);
+        }
+
+        // Reset all pieces (useful for a new game)
+        public static void ResetPieces()
+        {
+            pieceCollection.Clear();
         }
     }
 }
