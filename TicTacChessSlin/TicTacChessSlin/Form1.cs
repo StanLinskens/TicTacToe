@@ -19,6 +19,8 @@ namespace TicTacChessSlin
         int gap = 14;
 
         bool ActiveGame = false;
+        private bool isWhiteTurn = true; // Track turns
+
 
         private BoardTile[,] boardGrid; // 2D array to store tiles
 
@@ -44,7 +46,6 @@ namespace TicTacChessSlin
                 piece.PiecePanel.Visible = false;
             }
         }
-
 
 
         // board logic
@@ -197,45 +198,50 @@ namespace TicTacChessSlin
 
             foreach (string move in moves)
             {
+                bool isInfiniteMove = move.Contains("+"); // Detect infinite moves
+                string[] moveParts = move.Replace("+", "").Split('-'); // Remove `+` for processing
+
                 int newRow = row;
                 int newCol = col;
 
-                // Split combined moves (e.g., "up1-left2")
-                string[] moveParts = move.Split('-');
-
                 bool pathBlocked = false; // Track if movement is blocked
 
-                foreach (string part in moveParts)
+                do
                 {
-                    if (part.StartsWith("left")) newCol -= int.Parse(part.Substring(4));
-                    if (part.StartsWith("right")) newCol += int.Parse(part.Substring(5));
-                    if (part.StartsWith("up")) newRow -= int.Parse(part.Substring(2));
-                    if (part.StartsWith("down")) newRow += int.Parse(part.Substring(4));
-
-                    // Stop checking further if we go out of bounds
-                    if (newRow < 0 || newRow >= 3 || newCol < 0 || newCol >= 3)
+                    foreach (string part in moveParts)
                     {
-                        pathBlocked = true;
-                        break;
+                        if (part.StartsWith("left")) newCol -= int.Parse(part.Substring(4));
+                        if (part.StartsWith("right")) newCol += int.Parse(part.Substring(5));
+                        if (part.StartsWith("up")) newRow -= int.Parse(part.Substring(2));
+                        if (part.StartsWith("down")) newRow += int.Parse(part.Substring(4));
+
+                        // Stop checking if we go out of bounds
+                        if (newRow < 0 || newRow >= 3 || newCol < 0 || newCol >= 3)
+                        {
+                            pathBlocked = true;
+                            break;
+                        }
+
+                        BoardTile targetTile = boardGrid[newRow, newCol];
+
+                        // If tile is occupied, stop moving further
+                        if (targetTile.PieceOnTile != "None")
+                        {
+                            pathBlocked = true;
+                            break;
+                        }
                     }
 
-                    BoardTile targetTile = boardGrid[newRow, newCol];
-
-                    // If tile is occupied, block further movement
-                    if (targetTile.PieceOnTile != "None")
+                    // Highlight only if the path isn't blocked
+                    if (!pathBlocked)
                     {
-                        pathBlocked = true;
-                        break;
+                        boardGrid[newRow, newCol].TilePanel.BackColor = Color.LightGreen;
                     }
-                }
 
-                // Highlight only if the path isn't blocked
-                if (!pathBlocked)
-                {
-                    boardGrid[newRow, newCol].TilePanel.BackColor = Color.LightGreen;
-                }
+                } while (isInfiniteMove && !pathBlocked); // Repeat for `+` movements until blocked
             }
         }
+
 
         private Point pieceOriginalPosition;
         private ChessPiece selectedPiece;
@@ -248,23 +254,38 @@ namespace TicTacChessSlin
                 selectedPiece = PieceLibrary.GetPieceByPanel(piecePanel);
                 if (selectedPiece == null) return;
 
+                if (!ActiveGame)
+                {
+                    // Pre-game: Only allow movement within the spawn zone
+                    if ((selectedPiece.IsWhite && selectedPiece.Row != 0) ||
+                        (!selectedPiece.IsWhite && selectedPiece.Row != boardGrid.GetLength(0) - 1))
+                    {
+                        MessageBox.Show("You can only place pieces in the spawn area before the game starts!");
+                        return;
+                    }
+                }
+                else
+                {
+                    // During the game: Enforce turn-based movement
+                    if ((isWhiteTurn && !selectedPiece.IsWhite) || (!isWhiteTurn && selectedPiece.IsWhite))
+                    {
+                        MessageBox.Show("It's not your turn!");
+                        return;
+                    }
+                }
+
                 isDragging = true;
                 pieceOriginalPosition = piecePanel.Location;
                 piecePanel.Parent = this;
                 piecePanel.BringToFront();
 
-                if (!ActiveGame)
-                {
-                    // Only allow dropping on the correct spawn tiles before game start
-                    ValidSpawn(selectedPiece.IsWhite);
-                }
-                else
-                {
-                    // Show normal valid moves when the game has started
+                if (ActiveGame)
                     ShowValidMoves(selectedPiece);
-                }
+                else
+                    ValidSpawn(selectedPiece.IsWhite);  // Highlight valid spawn tiles
             }
         }
+
 
         private void Piece_MouseMove(object sender, MouseEventArgs e)
         {
@@ -281,47 +302,32 @@ namespace TicTacChessSlin
         private void Piece_MouseUp(object sender, MouseEventArgs e)
         {
             if (!isDragging || selectedPiece == null) return;
-
             isDragging = false;
+
             Panel piecePanel = selectedPiece.PiecePanel;
             Point dropPosition = piecePanel.Location;
-
             BoardTile validTile = null;
+
             foreach (var tile in boardGrid)
             {
-                Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
-                if (tileBounds.Contains(dropPosition))
+                if (new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size).Contains(dropPosition))
                 {
                     validTile = tile;
                     break;
                 }
             }
 
-            if (validTile != null)
+            if (validTile != null && validTile.PieceOnTile == "None")
             {
-                if (!ActiveGame)
-                {
-                    if ((selectedPiece.IsWhite && validTile.Spawn == "White") ||
-                        (!selectedPiece.IsWhite && validTile.Spawn == "Black"))
-                    {
-                        piecePanel.Location = validTile.TilePanel.Location;
-                        selectedPiece.Row = validTile.Row;
-                        selectedPiece.Col = validTile.Col;
+                piecePanel.Location = validTile.TilePanel.Location;
+                selectedPiece.Row = validTile.Row;
+                selectedPiece.Col = validTile.Col;
+                validTile.PieceOnTile = selectedPiece.PieceName;
 
-                        // Move the piece from display list to board list
-                        displayPieces.Remove(selectedPiece);
-                        boardPieces.Add(selectedPiece);
-                    }
-                    else
-                    {
-                        piecePanel.Location = pieceOriginalPosition;
-                    }
-                }
-                else
+                if (ActiveGame)
                 {
-                    piecePanel.Location = validTile.TilePanel.Location;
-                    selectedPiece.Row = validTile.Row;
-                    selectedPiece.Col = validTile.Col;
+                    isWhiteTurn = !isWhiteTurn; // Switch turns
+                    UpdateTurnLabel();
                 }
             }
             else
@@ -329,10 +335,13 @@ namespace TicTacChessSlin
                 piecePanel.Location = pieceOriginalPosition;
             }
 
-            // Reset all tile highlights
             ResetAllTileColors();
-
             selectedPiece = null;
+        }
+
+        private void UpdateTurnLabel()
+        {
+            lblTeamsTurn.Text = isWhiteTurn ? "White's Turn" : "Black's Turn";
         }
 
         // Method to reset all tile colors
@@ -359,5 +368,20 @@ namespace TicTacChessSlin
                 }
             }
         }
+
+        private void btnGameStatus_Click(object sender, EventArgs e)
+        {
+            ActiveGame = !ActiveGame; // Wisselt de waarde van true naar false en vice versa
+
+            if (ActiveGame)
+            {
+                btnGameStatus.Text = "Stop Game";
+            }
+            else
+            {
+                btnGameStatus.Text = "Start Game";
+            }
+        }
+
     }
 }
