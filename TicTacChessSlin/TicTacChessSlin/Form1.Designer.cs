@@ -31,6 +31,7 @@
             this.gbxPiecesHolder = new System.Windows.Forms.GroupBox();
             this.rbTrue = new System.Windows.Forms.RadioButton();
             this.rbFalse = new System.Windows.Forms.RadioButton();
+            this.btnGameStatus = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gbxPiecesHolder
@@ -68,11 +69,21 @@
             this.rbFalse.UseVisualStyleBackColor = true;
             this.rbFalse.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
+            // btnGameStatus
+            // 
+            this.btnGameStatus.Location = new System.Drawing.Point(351, 13);
+            this.btnGameStatus.Name = "btnGameStatus";
+            this.btnGameStatus.Size = new System.Drawing.Size(75, 23);
+            this.btnGameStatus.TabIndex = 2;
+            this.btnGameStatus.Text = "Start";
+            this.btnGameStatus.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 464);
+            this.Controls.Add(this.btnGameStatus);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
             this.Controls.Add(this.gbxPiecesHolder);
@@ -89,6 +100,7 @@
         private System.Windows.Forms.GroupBox gbxPiecesHolder;
         private System.Windows.Forms.RadioButton rbTrue;
         private System.Windows.Forms.RadioButton rbFalse;
+        private System.Windows.Forms.Button btnGameStatus;
     }
 }
 
