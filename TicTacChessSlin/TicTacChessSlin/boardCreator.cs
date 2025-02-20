@@ -49,4 +49,5 @@ internal class BoardTile
     {
         panel.BackColor = System.Drawing.Color.LightGray;
     }
+    
 }

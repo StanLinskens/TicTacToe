@@ -35,7 +35,7 @@
             // 
             // gbxPiecesHolder
             // 
-            this.gbxPiecesHolder.Location = new System.Drawing.Point(312, 119);
+            this.gbxPiecesHolder.Location = new System.Drawing.Point(351, 112);
             this.gbxPiecesHolder.Name = "gbxPiecesHolder";
             this.gbxPiecesHolder.Size = new System.Drawing.Size(154, 290);
             this.gbxPiecesHolder.TabIndex = 0;
@@ -45,7 +45,7 @@
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(312, 96);
+            this.rbTrue.Location = new System.Drawing.Point(351, 89);
             this.rbTrue.Name = "rbTrue";
             this.rbTrue.Size = new System.Drawing.Size(53, 17);
             this.rbTrue.TabIndex = 0;
@@ -58,7 +58,7 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(413, 96);
+            this.rbFalse.Location = new System.Drawing.Point(452, 89);
             this.rbFalse.Name = "rbFalse";
             this.rbFalse.Size = new System.Drawing.Size(52, 17);
             this.rbFalse.TabIndex = 1;
@@ -72,7 +72,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(510, 464);
+            this.ClientSize = new System.Drawing.Size(539, 464);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
             this.Controls.Add(this.gbxPiecesHolder);

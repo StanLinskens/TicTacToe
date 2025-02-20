@@ -16,7 +16,9 @@ namespace TicTacChessSlin
         int BoardStartX = 40;
         int BoardStartY = 125;
         string grid = "3x3";
-        int gap = 10;
+        int gap = 14;
+
+        bool ActiveGame = false;
 
         private BoardTile[,] boardGrid; // 2D array to store tiles
 
@@ -131,6 +133,11 @@ namespace TicTacChessSlin
 
                 this.Controls.Add(piecePanel);
 
+                // Movement functions added
+                piecePanel.MouseDown += Piece_MouseDown;
+                piecePanel.MouseUp += Piece_MouseUp;
+                piecePanel.MouseMove += Piece_MouseMove;
+
                 PieceLibrary.AddOrUpdatePiece(piece.Key, new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3));
             }
         }
@@ -218,10 +225,19 @@ namespace TicTacChessSlin
 
                 isDragging = true;
                 pieceOriginalPosition = piecePanel.Location;
+                piecePanel.Parent = this;
                 piecePanel.BringToFront();
 
-                // Show valid moves
-                ShowValidMoves(selectedPiece);
+                if (!ActiveGame)
+                {
+                    // Only allow dropping on the correct spawn tiles before game start
+                    ValidSpawn(selectedPiece.IsWhite);
+                }
+                else
+                {
+                    // Show normal valid moves when the game has started
+                    ShowValidMoves(selectedPiece);
+                }
             }
         }
 
@@ -245,7 +261,6 @@ namespace TicTacChessSlin
             Panel piecePanel = selectedPiece.PiecePanel;
             Point dropPosition = piecePanel.Location;
 
-            // Check if dropped on a valid tile
             BoardTile validTile = null;
             foreach (var tile in boardGrid)
             {
@@ -259,19 +274,51 @@ namespace TicTacChessSlin
 
             if (validTile != null)
             {
-                // Move the piece to the valid tile
-                piecePanel.Location = validTile.TilePanel.Location;
-                selectedPiece.Row = validTile.Row;
-                selectedPiece.Col = validTile.Col;
+                if (!ActiveGame)
+                {
+                    // Game has NOT started, restrict placement to spawn zone
+                    if ((selectedPiece.IsWhite && validTile.Spawn == "White") ||
+                        (!selectedPiece.IsWhite && validTile.Spawn == "Black"))
+                    {
+                        piecePanel.Location = validTile.TilePanel.Location;
+                        selectedPiece.Row = validTile.Row;
+                        selectedPiece.Col = validTile.Col;
+                    }
+                    else
+                    {
+                        piecePanel.Location = pieceOriginalPosition; // Snap back
+                    }
+                }
+                else
+                {
+                    // Game started: Normal movement logic
+                    piecePanel.Location = validTile.TilePanel.Location;
+                    selectedPiece.Row = validTile.Row;
+                    selectedPiece.Col = validTile.Col;
+                }
             }
             else
             {
-                // Snap back to original position
-                piecePanel.Location = pieceOriginalPosition;
+                piecePanel.Location = pieceOriginalPosition; // Snap back
             }
 
             selectedPiece = null;
         }
 
+
+        private void ValidSpawn(bool isWhite)
+        {
+            foreach (BoardTile tile in boardGrid)
+            {
+                if (isWhite && tile.Spawn == "White")
+                {
+                    tile.HighlightTile();
+                }
+                else if (!isWhite && tile.Spawn == "Black")
+                {
+                    tile.HighlightTile();
+                }
+            }
+        }
     }
 }
