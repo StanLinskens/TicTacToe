@@ -101,5 +101,23 @@
   <ItemGroup>
     <None Include="Resources\wizard.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chef.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dagger-dutchess.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\electro-spirit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fire-spirit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baby-dragon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\electro-dragon.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

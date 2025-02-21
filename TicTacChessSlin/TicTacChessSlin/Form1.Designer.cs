@@ -38,7 +38,7 @@
             // 
             this.gbxPiecesHolder.Location = new System.Drawing.Point(351, 112);
             this.gbxPiecesHolder.Name = "gbxPiecesHolder";
-            this.gbxPiecesHolder.Size = new System.Drawing.Size(154, 290);
+            this.gbxPiecesHolder.Size = new System.Drawing.Size(172, 290);
             this.gbxPiecesHolder.TabIndex = 0;
             this.gbxPiecesHolder.TabStop = false;
             this.gbxPiecesHolder.Text = "Pick Your Pieces";
@@ -59,7 +59,7 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(452, 89);
+            this.rbFalse.Location = new System.Drawing.Point(471, 89);
             this.rbFalse.Name = "rbFalse";
             this.rbFalse.Size = new System.Drawing.Size(52, 17);
             this.rbFalse.TabIndex = 1;
@@ -82,7 +82,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 464);
+            this.ClientSize = new System.Drawing.Size(562, 464);
             this.Controls.Add(this.btnGameStatus);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
