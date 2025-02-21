@@ -19,8 +19,6 @@ namespace TicTacChessSlin
         int gap = 14;
 
         bool ActiveGame = false;
-        private bool isWhiteTurn = true; // Track turns
-
 
         private BoardTile[,] boardGrid; // 2D array to store tiles
 
@@ -48,6 +46,7 @@ namespace TicTacChessSlin
         }
 
 
+
         // board logic
         public void BoardCreation(string gridSize)
         {
@@ -59,9 +58,9 @@ namespace TicTacChessSlin
                 return;
             }
 
-            boardGrid = new BoardTile[gridRow, gridCol]; // Create grid structure
+            boardGrid = new BoardTile[gridRow, gridCol];
 
-            int tileID = 1; // Unique ID for each tile
+            int tileID = 1;
             for (int row = 0; row < gridRow; row++)
             {
                 for (int col = 0; col < gridCol; col++)
@@ -77,16 +76,16 @@ namespace TicTacChessSlin
 
                     // Set the position: top-left panel starts at (BoardStart, BoardStart)
                     newPanel.Location = new Point(
-                        BoardStartX + col * (newPanel.Width + gap),  // X position
-                        BoardStartY + row * (newPanel.Height + gap)   // Y position
+                        BoardStartX + col * (newPanel.Width + gap),
+                        BoardStartY + row * (newPanel.Height + gap)
                     );
 
                     // Determine spawn zones (assuming the first and last rows are spawn points)
                     string spawn = "None";
-                    if (row == 0) spawn = "White";  // Top row is white spawn
-                    if (row == gridRow - 1) spawn = "Black"; // Bottom row is black spawn
+                    if (row == 0) spawn = "White";
+                    if (row == gridRow - 1) spawn = "Black";
 
-                    // Add panel to the form
+                    
                     this.Controls.Add(newPanel);
 
                     boardGrid[row, col] = new BoardTile(newPanel, tileName, tileID++, row, col, spawn);
@@ -97,25 +96,22 @@ namespace TicTacChessSlin
         }
 
 
-        private void PiecePlacement(object sender, MouseEventArgs e)
-        {
-            //all panels that and in Piece.
-            //move piece with mouse. 
-            //only drop on gridTile
-
-
-        }
-
         private void CreateChessPieces()
         {
             Dictionary<string, (Image, bool, string)> pieces = new Dictionary<string, (Image, bool, string)>
             {
-                { "Wizard", (Properties.Resources.wizard, true, "upLeft+, upRight+, downLeft+, downRight+") },  // Infinite diagonal movement
-                { "Witch", (Properties.Resources.witch, false, "upLeft+, upRight+, downLeft+, downRight+") },  // Same as Wizard
-                { "Prince", (Properties.Resources.prince, true, "up2-left1, up2-right1, down2-left1, down2-right1, left2-up1, left2-down1, right2-up1, right2-down1") },  // Fixed L-shape
-                { "Dark_Knight", (Properties.Resources.dark_knight, false, "up2-left1, up2-right1, down2-left1, down2-right1, left2-up1, left2-down1, right2-up1, right2-down1") },  // Fixed L-shape
-                { "Inferno_Tower", (Properties.Resources.inferno_tower, true, "left+, right+, up+, down+") },  // Infinite horizontal/vertical movement
-                { "Crossbow", (Properties.Resources.crossbow, false, "left+, right+, up+, down+") }  // Same as Inferno Tower
+                { "Wizard", (Properties.Resources.wizard, true, "upLeft+, upRight+, downLeft+, downRight+") },
+                { "Witch", (Properties.Resources.witch, false, "upLeft+, upRight+, downLeft+, downRight+") },
+                { "Prince", (Properties.Resources.prince, true, "up2-left1, up2-right1, down2-left1, down2-right1, left2-up1, left2-down1, right2-up1, right2-down1") },
+                { "Dark_Knight", (Properties.Resources.dark_knight, false, "up2-left1, up2-right1, down2-left1, down2-right1, left2-up1, left2-down1, right2-up1, right2-down1") },
+                { "Inferno_Tower", (Properties.Resources.inferno_tower, true, "left+, right+, up+, down+") },
+                { "Crossbow", (Properties.Resources.crossbow, false, "left+, right+, up+, down+") },
+                { "Baby_Dragon", (Properties.Resources.baby_dragon, true, "left1, right1, up+, down+") },
+                { "Electro_Dragon", (Properties.Resources.electro_dragon, false, "left1, right1, up+, down+") },
+                { "Fire_Spirit", (Properties.Resources.fire_spirit, true, "left1, right1, up1, down1") },
+                { "Electro_Spirit", (Properties.Resources.electro_spirit, false, "left1, right1, up1, down1") },
+                { "Chef", (Properties.Resources.chef, true, "up+, upRight+, right+, downRight+, down+, downLeft+, left+, upLeft+") },
+                { "Dagger_Dutchess", (Properties.Resources.dagger_dutchess, false, "up+, upRight+, right+, downRight+, down+, downLeft+, left+, upLeft+") }
             };
 
             foreach (var piece in pieces)
@@ -136,10 +132,8 @@ namespace TicTacChessSlin
                 // Create the chess piece
                 ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
 
-                // Store the piece in the display list
                 displayPieces.Add(newPiece);
 
-                // Add event handlers
                 piecePanel.MouseDown += Piece_MouseDown;
                 piecePanel.MouseUp += Piece_MouseUp;
                 piecePanel.MouseMove += Piece_MouseMove;
@@ -148,12 +142,15 @@ namespace TicTacChessSlin
             }
         }
 
-
         private void DisplayPieces(bool showTruePieces)
         {
-            int x = 5;
-            int y = 25;
-            int spacing = 85;
+            int x = 2;
+            int y = 18;
+            int spacingX = 85;
+            int spacingY = 85;
+            int columns = 2;
+
+            int count = 0;
 
             foreach (var piece in displayPieces)
             {
@@ -163,12 +160,17 @@ namespace TicTacChessSlin
                     piece.PiecePanel.Visible = true;
                     piece.PiecePanel.Location = new Point(x, y);
                     gbxPiecesHolder.Controls.Add(piece.PiecePanel);
-                    x += spacing;
 
-                    if (x + spacing > gbxPiecesHolder.Width)
+                    count++;
+
+                    if (count % columns == 0)  // Move to the next row after filling a column
                     {
                         x = 5;
-                        y += spacing;
+                        y += spacingY;
+                    }
+                    else
+                    {
+                        x += spacingX;
                     }
                 }
                 else
@@ -178,7 +180,6 @@ namespace TicTacChessSlin
                 }
             }
         }
-
 
 
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
@@ -193,55 +194,81 @@ namespace TicTacChessSlin
         private void ShowValidMoves(ChessPiece piece)
         {
             string[] moves = piece.MoveSet.Split(',');
+
             int row = piece.Row;
             int col = piece.Col;
 
             foreach (string move in moves)
             {
-                bool isInfiniteMove = move.Contains("+"); // Detect infinite moves
-                string[] moveParts = move.Replace("+", "").Split('-'); // Remove `+` for processing
-
                 int newRow = row;
                 int newCol = col;
 
-                bool pathBlocked = false; // Track if movement is blocked
+                // Split combined moves (e.g., "upLeft3-left2" or "up+")
+                string[] moveParts = move.Split('-');
 
-                do
+
+                bool infiniteMovement = false; // Track if it's an infinite movement
+
+                foreach (string part in moveParts)
                 {
-                    foreach (string part in moveParts)
-                    {
-                        if (part.StartsWith("left")) newCol -= int.Parse(part.Substring(4));
-                        if (part.StartsWith("right")) newCol += int.Parse(part.Substring(5));
-                        if (part.StartsWith("up")) newRow -= int.Parse(part.Substring(2));
-                        if (part.StartsWith("down")) newRow += int.Parse(part.Substring(4));
+                    int step = 1; // Default step if no number is provided
+                    string processedPart = part; // Create a modifiable copy
 
-                        // Stop checking if we go out of bounds
+                    // Check if movement is infinite (has '+')
+                    if (processedPart.EndsWith("+"))
+                    {
+                        infiniteMovement = true;
+                        processedPart = processedPart.TrimEnd('+'); // Remove '+' for parsing
+                    }
+
+                    // Extract number from move, if available
+                    string number = new string(processedPart.Where(char.IsDigit).ToArray());
+                    if (!string.IsNullOrEmpty(number))
+                    {
+                        step = int.Parse(number);
+                        processedPart = new string(processedPart.Where(c => !char.IsDigit(c)).ToArray()); // Remove digits
+                    }
+
+                    // Apply movement
+                    int dRow = 0, dCol = 0;
+                    switch (part)
+                    {
+                        case "left": dCol = -1; break;
+                        case "right": dCol = 1; break;
+                        case "up": dRow = -1; break;
+                        case "down": dRow = 1; break;
+                        case "upLeft": dRow = -1; dCol = -1; break;
+                        case "upRight": dRow = -1; dCol = 1; break;
+                        case "downLeft": dRow = 1; dCol = -1; break;
+                        case "downRight": dRow = 1; dCol = 1; break;
+                    }
+
+                    // Apply movement loop (for infinite movement)
+                    while (true)
+                    {
+                        newRow += dRow * step;
+                        newCol += dCol * step;
+
+                        // Stop if out of bounds
                         if (newRow < 0 || newRow >= 3 || newCol < 0 || newCol >= 3)
-                        {
-                            pathBlocked = true;
                             break;
-                        }
 
                         BoardTile targetTile = boardGrid[newRow, newCol];
 
-                        // If tile is occupied, stop moving further
+                        // Stop if the path is blocked
                         if (targetTile.PieceOnTile != "None")
-                        {
-                            pathBlocked = true;
                             break;
-                        }
-                    }
 
-                    // Highlight only if the path isn't blocked
-                    if (!pathBlocked)
-                    {
+                        // Highlight the tile
                         boardGrid[newRow, newCol].TilePanel.BackColor = Color.LightGreen;
-                    }
 
-                } while (isInfiniteMove && !pathBlocked); // Repeat for `+` movements until blocked
+                        // If not infinite, stop after one move
+                        if (!infiniteMovement)
+                            break;
+                    }
+                }
             }
         }
-
 
         private Point pieceOriginalPosition;
         private ChessPiece selectedPiece;
@@ -254,38 +281,23 @@ namespace TicTacChessSlin
                 selectedPiece = PieceLibrary.GetPieceByPanel(piecePanel);
                 if (selectedPiece == null) return;
 
-                if (!ActiveGame)
-                {
-                    // Pre-game: Only allow movement within the spawn zone
-                    if ((selectedPiece.IsWhite && selectedPiece.Row != 0) ||
-                        (!selectedPiece.IsWhite && selectedPiece.Row != boardGrid.GetLength(0) - 1))
-                    {
-                        MessageBox.Show("You can only place pieces in the spawn area before the game starts!");
-                        return;
-                    }
-                }
-                else
-                {
-                    // During the game: Enforce turn-based movement
-                    if ((isWhiteTurn && !selectedPiece.IsWhite) || (!isWhiteTurn && selectedPiece.IsWhite))
-                    {
-                        MessageBox.Show("It's not your turn!");
-                        return;
-                    }
-                }
-
                 isDragging = true;
                 pieceOriginalPosition = piecePanel.Location;
                 piecePanel.Parent = this;
                 piecePanel.BringToFront();
 
-                if (ActiveGame)
-                    ShowValidMoves(selectedPiece);
+                if (!ActiveGame)
+                {
+                    // Only allow dropping on the correct spawn tiles before game start
+                    ValidSpawn(selectedPiece.IsWhite);
+                }
                 else
-                    ValidSpawn(selectedPiece.IsWhite);  // Highlight valid spawn tiles
+                {
+                    // Show normal valid moves when the game has started
+                    ShowValidMoves(selectedPiece);
+                }
             }
         }
-
 
         private void Piece_MouseMove(object sender, MouseEventArgs e)
         {
@@ -302,47 +314,76 @@ namespace TicTacChessSlin
         private void Piece_MouseUp(object sender, MouseEventArgs e)
         {
             if (!isDragging || selectedPiece == null) return;
+
             isDragging = false;
 
-            Panel piecePanel = selectedPiece.PiecePanel;
-            Point dropPosition = piecePanel.Location;
-            BoardTile validTile = null;
+            // Get the mouse position relative to the form
+            Point mousePosition = selectedPiece.PiecePanel.Parent.PointToClient(Cursor.Position);
 
+            BoardTile hoveredTile = null;
             foreach (var tile in boardGrid)
             {
-                if (new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size).Contains(dropPosition))
+                Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
+                if (tileBounds.Contains(mousePosition))
                 {
-                    validTile = tile;
+                    hoveredTile = tile;
                     break;
                 }
             }
 
-            if (validTile != null && validTile.PieceOnTile == "None")
+            if (hoveredTile != null && hoveredTile.PieceOnTile == "None") // Check if tile is empty
             {
-                piecePanel.Location = validTile.TilePanel.Location;
-                selectedPiece.Row = validTile.Row;
-                selectedPiece.Col = validTile.Col;
-                validTile.PieceOnTile = selectedPiece.PieceName;
-
-                if (ActiveGame)
+                if (!ActiveGame)
                 {
-                    isWhiteTurn = !isWhiteTurn; // Switch turns
-                    UpdateTurnLabel();
+                    if ((selectedPiece.IsWhite && hoveredTile.Spawn == "White") ||
+                        (!selectedPiece.IsWhite && hoveredTile.Spawn == "Black"))
+                    {
+                        MovePieceToTile(selectedPiece, hoveredTile);
+                    }
+                    else
+                    {
+                        ResetPiecePosition();
+                    }
+                }
+                else
+                {
+                    MovePieceToTile(selectedPiece, hoveredTile);
                 }
             }
             else
             {
-                piecePanel.Location = pieceOriginalPosition;
+                ResetPiecePosition();
             }
 
             ResetAllTileColors();
             selectedPiece = null;
         }
 
-        private void UpdateTurnLabel()
+        // Moves a piece to a specific tile and updates tile occupancy
+        private void MovePieceToTile(ChessPiece piece, BoardTile tile)
         {
-            lblTeamsTurn.Text = isWhiteTurn ? "White's Turn" : "Black's Turn";
+            piece.PiecePanel.Location = tile.TilePanel.Location;
+            piece.Row = tile.Row;
+            piece.Col = tile.Col;
+
+            tile.PieceOnTile = piece.ToString(); // Assign piece to tile
+
+            if (!ActiveGame)
+            {
+                displayPieces.Remove(piece);
+                boardPieces.Add(piece);
+            }
         }
+
+        // Resets the piece back to its original position if placement fails
+        private void ResetPiecePosition()
+        {
+            if (selectedPiece != null)
+            {
+                selectedPiece.PiecePanel.Location = pieceOriginalPosition;
+            }
+        }
+
 
         // Method to reset all tile colors
         private void ResetAllTileColors()
@@ -368,20 +409,5 @@ namespace TicTacChessSlin
                 }
             }
         }
-
-        private void btnGameStatus_Click(object sender, EventArgs e)
-        {
-            ActiveGame = !ActiveGame; // Wisselt de waarde van true naar false en vice versa
-
-            if (ActiveGame)
-            {
-                btnGameStatus.Text = "Stop Game";
-            }
-            else
-            {
-                btnGameStatus.Text = "Start Game";
-            }
-        }
-
     }
 }
