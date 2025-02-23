@@ -1,5 +1,6 @@
-﻿using System.Windows.Forms;
-using System;
+﻿using System;
+using System.Windows.Forms;
+using TicTacChessSlin;
 
 internal class BoardTile
 {
@@ -8,11 +9,11 @@ internal class BoardTile
     private Panel panel;
     private int row;
     private int col;
-    private string pieceOnTile; // Piece that is on the tile
+    private ChessPiece pieceOnTile; // Piece that is on the tile
     private string spawn; // "White", "Black", or "None"
 
     // Constructor
-    public BoardTile(Panel panel, string tileName, int tileID, int row, int col, string spawn = "None", string pieceOnTile = "None")
+    public BoardTile(Panel panel, string tileName, int tileID, int row, int col, string spawn = "None", ChessPiece pieceOnTile = null)
     {
         this.panel = panel;
         this.tileName = tileName;
@@ -28,7 +29,7 @@ internal class BoardTile
     public int TileID { get => tileID; set => tileID = value; }
     public int Row { get => row; set => row = value; }
     public int Col { get => col; set => col = value; }
-    public string PieceOnTile { get => pieceOnTile; set => pieceOnTile = value; }
+    public ChessPiece PieceOnTile { get => pieceOnTile; set => pieceOnTile = value; }
     public string Spawn { get => spawn; set => spawn = value; }
     public Panel TilePanel => panel;
 
@@ -38,7 +39,6 @@ internal class BoardTile
         Console.WriteLine($"Tile: {tileName} (ID: {tileID}) at [{row}, {col}] contains: {pieceOnTile}, Spawn: {spawn}");
     }
 
-    // Method to highlight the tile when a piece can move here
     public void HighlightTile()
     {
         panel.BackColor = System.Drawing.Color.LightGreen;
@@ -49,5 +49,5 @@ internal class BoardTile
     {
         panel.BackColor = System.Drawing.Color.LightGray;
     }
-    
+
 }

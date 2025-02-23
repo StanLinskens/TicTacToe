@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,14 +7,14 @@ namespace TicTacChessSlin
     internal class ChessPiece
     {
         public string PieceName { get; set; }
-        public bool IsWhite { get; set; }     
+        public bool IsWhite { get; set; }
         public Image PieceImage { get; set; }
         public Panel PiecePanel { get; set; }
 
         public int Row { get; set; }
         public int Col { get; set; }
 
-        public List<MoveInstruction> MovementRules { get; } 
+        public List<MoveInstruction> MovementRules { get; }
 
         public ChessPiece(string pieceName, bool isWhite, Panel piecePanel, int row, int col, List<MoveInstruction> movementRules)
         {
@@ -26,7 +25,7 @@ namespace TicTacChessSlin
             Col = col;
             MovementRules = movementRules ?? new List<MoveInstruction>();
         }
-        
+
         private Point GetGridPosition(int row, int col)
         {
             int tileSize = 80;

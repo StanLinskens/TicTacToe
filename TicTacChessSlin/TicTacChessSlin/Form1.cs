@@ -180,19 +180,19 @@ namespace TicTacChessSlin
 {
     "Baby_Dragon", (Properties.Resources.baby_dragon, true, new List<MoveInstruction>
         {
-            new MoveInstruction(0, -1, true),
-            new MoveInstruction(0, 1, true),
-            new MoveInstruction(-1, 0, false),
-            new MoveInstruction(1, 0, false)
+            new MoveInstruction(0, -1, false),
+            new MoveInstruction(0, 1, false),
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true)
         })
 },
 {
     "Electro_Dragon", (Properties.Resources.electro_dragon, false, new List<MoveInstruction>
         {
-            new MoveInstruction(0, -1, true),
-            new MoveInstruction(0, 1, true),
-            new MoveInstruction(-1, 0, false),
-            new MoveInstruction(1, 0, false)
+            new MoveInstruction(0, -1, false),
+            new MoveInstruction(0, 1, false),
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true)
         })
 },
 {
@@ -316,7 +316,7 @@ namespace TicTacChessSlin
                     BoardTile tile = GetTileAt(newRow, newCol);
 
                     // Stop if out of bounds or occupied
-                    if (tile == null || tile.PieceOnTile != "None")
+                    if (tile == null || tile.PieceOnTile != null)
                         break;
 
                     validMoves.Add(tile);
@@ -406,7 +406,7 @@ namespace TicTacChessSlin
                 }
             }
 
-            if (hoveredTile != null && hoveredTile.PieceOnTile == "None")
+            if (hoveredTile != null && hoveredTile.PieceOnTile == null && hoveredTile.TilePanel.BackColor == Color.LightGreen)
             {
                 if (!ActiveGame)
                 {
@@ -429,6 +429,8 @@ namespace TicTacChessSlin
                         MovePieceToTile(selectedPiece, hoveredTile);
                         isWhiteTurn = !isWhiteTurn;
                         UpdateTurnLabel();
+
+                        CheckForWinner();
                     }
                     else
                     {
@@ -438,23 +440,21 @@ namespace TicTacChessSlin
             }
             else
             {
-                ResetPiecePosition();
+                ResetPiecePosition(); // Prevent moving to non-highlighted tiles
             }
 
             ResetAllTileColors();
             selectedPiece = null;
         }
 
-
-        // Moves a piece to a specific tile and updates tile occupancy
         private void MovePieceToTile(ChessPiece piece, BoardTile tile)
         {
             // Remove this piece from any tile that has it
             foreach (var t in boardGrid)
             {
-                if (t.PieceOnTile == piece.ToString())
+                if (t.PieceOnTile == piece)
                 {
-                    t.PieceOnTile = "None";
+                    t.PieceOnTile = null;
                 }
             }
 
@@ -464,7 +464,7 @@ namespace TicTacChessSlin
             piece.Col = tile.Col;
 
             // Set the new tile to hold the piece
-            tile.PieceOnTile = piece.ToString();
+            tile.PieceOnTile = piece;
 
             if (!ActiveGame)
             {
@@ -473,7 +473,6 @@ namespace TicTacChessSlin
             }
         }
 
-        // Resets the piece back to its original position if placement fails
         private void ResetPiecePosition()
         {
             if (selectedPiece != null)
@@ -482,7 +481,6 @@ namespace TicTacChessSlin
             }
         }
 
-        // Method to reset all tile colors
         private void ResetAllTileColors()
         {
             foreach (var tile in boardGrid)
@@ -551,6 +549,45 @@ namespace TicTacChessSlin
             }
         }
 
+        private void CheckForWinner()
+        {
+            int rows = boardGrid.GetLength(0);
+            int cols = boardGrid.GetLength(1);
+
+            // Check rows and columns
+            for (int i = 0; i < rows; i++)
+            {
+                if (CheckLine(boardGrid[i, 0], boardGrid[i, 1], boardGrid[i, 2])) return; // Check row
+            }
+            for (int j = 0; j < cols; j++)
+            {
+                if (CheckLine(boardGrid[0, j], boardGrid[1, j], boardGrid[2, j])) return; // Check column
+            }
+
+            // Check diagonals
+            if (CheckLine(boardGrid[0, 0], boardGrid[1, 1], boardGrid[2, 2])) return; // Main diagonal
+            if (CheckLine(boardGrid[0, 2], boardGrid[1, 1], boardGrid[2, 0])) return; // Anti-diagonal
+        }
+
+        // 🏆 Checks if three tiles contain the same non-null piece (and not in a spawn area)
+        private bool CheckLine(BoardTile a, BoardTile b, BoardTile c)
+        {
+            if (a.PieceOnTile == null || b.PieceOnTile == null || c.PieceOnTile == null)
+                return false;
+
+            bool isWhite = a.PieceOnTile.IsWhite;
+            if (b.PieceOnTile.IsWhite != isWhite || c.PieceOnTile.IsWhite != isWhite)
+                return false; // Not the same team
+
+            // 🚫 Victory is denied if any of these tiles are in their spawn
+            if (a.Spawn != "None" || b.Spawn != "None" || c.Spawn != "None")
+                return false;
+
+            // 🎉 If we reach this point, there's a winner
+            string winningTeam = isWhite ? "White" : "Black";
+            MessageBox.Show($"{winningTeam} wins!");
+            return true;
+        }
 
     }
 }
