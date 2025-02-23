@@ -152,5 +152,59 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\electro_wizard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\executioner.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fireball.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\freeze.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\golem.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hog_rider.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ice_wizard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\inferno_dragon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lightning.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mega_knight.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pekka.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phoenix.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\poison.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ram_rider.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sparky.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\valkyrie.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

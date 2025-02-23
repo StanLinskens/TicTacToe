@@ -28,28 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gbxPiecesHolder = new System.Windows.Forms.GroupBox();
             this.rbTrue = new System.Windows.Forms.RadioButton();
             this.rbFalse = new System.Windows.Forms.RadioButton();
             this.btnGameStatus = new System.Windows.Forms.Button();
             this.lblTeamsTurn = new System.Windows.Forms.Label();
+            this.gbxPiecesHolder = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
-            // 
-            // gbxPiecesHolder
-            // 
-            this.gbxPiecesHolder.Location = new System.Drawing.Point(526, 172);
-            this.gbxPiecesHolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxPiecesHolder.Name = "gbxPiecesHolder";
-            this.gbxPiecesHolder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxPiecesHolder.Size = new System.Drawing.Size(258, 446);
-            this.gbxPiecesHolder.TabIndex = 0;
-            this.gbxPiecesHolder.TabStop = false;
-            this.gbxPiecesHolder.Text = "Pick Your Pieces";
             // 
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(526, 137);
+            this.rbTrue.Location = new System.Drawing.Point(760, 30);
             this.rbTrue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rbTrue.Name = "rbTrue";
             this.rbTrue.Size = new System.Drawing.Size(75, 24);
@@ -63,7 +52,7 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(706, 137);
+            this.rbFalse.Location = new System.Drawing.Point(940, 30);
             this.rbFalse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rbFalse.Name = "rbFalse";
             this.rbFalse.Size = new System.Drawing.Size(73, 24);
@@ -76,7 +65,7 @@
             // 
             // btnGameStatus
             // 
-            this.btnGameStatus.Location = new System.Drawing.Point(526, 20);
+            this.btnGameStatus.Location = new System.Drawing.Point(38, 14);
             this.btnGameStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnGameStatus.Name = "btnGameStatus";
             this.btnGameStatus.Size = new System.Drawing.Size(112, 35);
@@ -88,16 +77,27 @@
             // lblTeamsTurn
             // 
             this.lblTeamsTurn.AutoSize = true;
-            this.lblTeamsTurn.Location = new System.Drawing.Point(526, 637);
+            this.lblTeamsTurn.Location = new System.Drawing.Point(756, 906);
             this.lblTeamsTurn.Name = "lblTeamsTurn";
             this.lblTeamsTurn.Size = new System.Drawing.Size(0, 20);
             this.lblTeamsTurn.TabIndex = 3;
+            // 
+            // gbxPiecesHolder
+            // 
+            this.gbxPiecesHolder.Location = new System.Drawing.Point(760, 65);
+            this.gbxPiecesHolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxPiecesHolder.Name = "gbxPiecesHolder";
+            this.gbxPiecesHolder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxPiecesHolder.Size = new System.Drawing.Size(258, 821);
+            this.gbxPiecesHolder.TabIndex = 0;
+            this.gbxPiecesHolder.TabStop = false;
+            this.gbxPiecesHolder.Text = "Pick Your Pieces";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 714);
+            this.ClientSize = new System.Drawing.Size(1049, 960);
             this.Controls.Add(this.lblTeamsTurn);
             this.Controls.Add(this.btnGameStatus);
             this.Controls.Add(this.rbFalse);

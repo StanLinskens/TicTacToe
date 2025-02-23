@@ -8,9 +8,9 @@ namespace TicTacChessSlin
 {
     public partial class Form1 : Form
     {
-        int BoardStartX = 40;
-        int BoardStartY = 125;
-        string grid = "3x3";
+        int BoardStartX = 25;
+        int BoardStartY = 50;
+        string grid = "5x5";
         int gap = 14;
 
         bool ActiveGame = false;
@@ -25,7 +25,7 @@ namespace TicTacChessSlin
         private List<ChessPiece> chessPieces = new List<ChessPiece>(); // List to store pieces
 
         private List<ChessPiece> displayPieces = new List<ChessPiece>(); // Pieces in the UI display
-        private List<ChessPiece> boardPieces = new List<ChessPiece>();
+        private List<ChessPiece> boardPieces = new List<ChessPiece>(); // Pieces on the board
 
         public Form1()
         {
@@ -49,10 +49,10 @@ namespace TicTacChessSlin
         public void BoardCreation(string gridSize)
         {
             // Convert string to row and column
-            string[] sizeParts = gridSize.Split('x'); // Expecting format like "3x3"
+            string[] sizeParts = gridSize.Split('x'); // Expecting format like "5x5"
             if (sizeParts.Length != 2 || !int.TryParse(sizeParts[0], out int gridRow) || !int.TryParse(sizeParts[1], out int gridCol))
             {
-                Console.WriteLine("Invalid grid size format. Use format like '3x3'.");
+                Console.WriteLine("Invalid grid size format. Use format like '5x5'.");
                 return;
             }
 
@@ -78,151 +78,308 @@ namespace TicTacChessSlin
                         BoardStartY + row * (newPanel.Height + gap)
                     );
 
-                    // Determine spawn zones (assuming the first and last rows are spawn points)
+                    // Determine spawn zones (first and last row are spawns)
                     string spawn = "None";
                     if (row == 0) spawn = "White";
                     if (row == gridRow - 1) spawn = "Black";
 
+                    // Determine win condition target tiles (corners of a 3x3 in the 5x5)
+                    bool isTargetTile = (row == 1 && (col == 1 || col == 3)) || (row == 3 && (col == 1 || col == 3));
+                    string tileType = isTargetTile ? "Target" : "Normal";
+
+                    Image tileImage = null;
+                    if (isTargetTile)
+                    {
+                        tileImage = Properties.Resources.button; 
+                        //newPanel.BackColor = Color.Gold;
+                    }
 
                     this.Controls.Add(newPanel);
 
-                    boardGrid[row, col] = new BoardTile(newPanel, tileName, tileID++, row, col, spawn);
+                    boardGrid[row, col] = new BoardTile(newPanel, tileName, tileID++, row, col, spawn, null, tileType, tileImage);
+                    boardGrid[row, col].ApplyTileImage();
                 }
             }
 
-            Console.WriteLine($"Board of size {gridRow}x{gridCol} created.");
+            Console.WriteLine($"Board of size {gridRow}x{gridCol} created with target tiles for win condition.");
         }
 
         private void CreateChessPieces()
         {
             Dictionary<string, (Image, bool, List<MoveInstruction>)> pieces = new Dictionary<string, (Image, bool, List<MoveInstruction>)>
             {
-{
-    "Wizard", (Properties.Resources.wizard, true, new List<MoveInstruction>
-        {
-            new MoveInstruction(-1, -1, true),
-            new MoveInstruction(-1, 1, true),
-            new MoveInstruction(1, -1, true),
-            new MoveInstruction(1, 1, true)
-        })
-},
-{
-    "Witch", (Properties.Resources.witch, false, new List<MoveInstruction>
-        {
-            new MoveInstruction(-1, -1, true),
-            new MoveInstruction(-1, 1, true),
-            new MoveInstruction(1, -1, true),
-            new MoveInstruction(1, 1, true)
-        })
-},
-{
-    "Crossbow", (Properties.Resources.crossbow, false, new List<MoveInstruction>
-        {
-            new MoveInstruction(-1, 0, true),
-            new MoveInstruction(1, 0, true),
-            new MoveInstruction(0, -1, true),
-            new MoveInstruction(0, 1, true)
-        })
-},
-{
-    "Inferno_Tower", (Properties.Resources.inferno_tower, true, new List<MoveInstruction>
-        {
-            new MoveInstruction(-1, 0, true),
-            new MoveInstruction(1, 0, true),
-            new MoveInstruction(0, -1, true),
-            new MoveInstruction(0, 1, true)
-        })
-},
-{
-    "Fire_Spirit", (Properties.Resources.fire_spirit, true, new List<MoveInstruction>
-        {
-            new MoveInstruction(0, -1, false),
-            new MoveInstruction(0, 1, false),
-            new MoveInstruction(-1, 0, false),
-            new MoveInstruction(1, 0, false)
-        })
-},
-{
-    "Electro_Spirit", (Properties.Resources.electro_spirit, false, new List<MoveInstruction>
-        {
-            new MoveInstruction(0, -1, false),
-            new MoveInstruction(0, 1, false),
-            new MoveInstruction(-1, 0, false),
-            new MoveInstruction(1, 0, false)
-        })
-},
-{
-    "Prince", (Properties.Resources.prince, true, new List<MoveInstruction>
-        {
-            new MoveInstruction(-2, -1, false),
-            new MoveInstruction(-2, 1, false),
-            new MoveInstruction(2, -1, false),
-            new MoveInstruction(2, 1, false),
-            new MoveInstruction(-1, -2, false),
-            new MoveInstruction(1, -2, false),
-            new MoveInstruction(-1, 2, false),
-            new MoveInstruction(1, 2, false)
-        })
-},
-{
-    "Dark_Knight", (Properties.Resources.dark_knight, false, new List<MoveInstruction>
-        {
-            new MoveInstruction(-2, -1, false),
-            new MoveInstruction(-2, 1, false),
-            new MoveInstruction(2, -1, false),
-            new MoveInstruction(2, 1, false),
-            new MoveInstruction(-1, -2, false),
-            new MoveInstruction(1, -2, false),
-            new MoveInstruction(-1, 2, false),
-            new MoveInstruction(1, 2, false)
-        })
-},
-{
-    "Baby_Dragon", (Properties.Resources.baby_dragon, true, new List<MoveInstruction>
-        {
-            new MoveInstruction(0, -1, false),
-            new MoveInstruction(0, 1, false),
-            new MoveInstruction(-1, 0, true),
-            new MoveInstruction(1, 0, true)
-        })
-},
-{
-    "Electro_Dragon", (Properties.Resources.electro_dragon, false, new List<MoveInstruction>
-        {
-            new MoveInstruction(0, -1, false),
-            new MoveInstruction(0, 1, false),
-            new MoveInstruction(-1, 0, true),
-            new MoveInstruction(1, 0, true)
-        })
-},
-{
-    "Dagger_Dutchess", (Properties.Resources.dagger_dutchess, false, new List<MoveInstruction>
-        {
-            new MoveInstruction(-1, -1, true),
-            new MoveInstruction(-1, 1, true),
-            new MoveInstruction(1, -1, true),
-            new MoveInstruction(1, 1, true),
-            new MoveInstruction(0, -1, true),
-            new MoveInstruction(0, 1, true),
-            new MoveInstruction(-1, 0, true),
-            new MoveInstruction(1, 0, true)
-        })
-},
-{
-    "Chef", (Properties.Resources.chef, true, new List<MoveInstruction>
-        {
-            new MoveInstruction(-1, -1, true),
-            new MoveInstruction(-1, 1, true),
-            new MoveInstruction(1, -1, true),
-            new MoveInstruction(1, 1, true),
-            new MoveInstruction(0, -1, true),
-            new MoveInstruction(0, 1, true),
-            new MoveInstruction(-1, 0, true),
-            new MoveInstruction(1, 0, true)
-        })
-}
-
-
+                {
+                    "Wizard", (Properties.Resources.wizard, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, 1, true)
+                        })
+                },
+                {
+                    "Witch", (Properties.Resources.witch, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, 1, true)
+                        })
+                },
+                {
+                    "Crossbow", (Properties.Resources.crossbow, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(1, 0, true),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(0, 1, true)
+                        })
+                },
+                {
+                    "Inferno_Tower", (Properties.Resources.inferno_tower, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(1, 0, true),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(0, 1, true)
+                        })
+                },
+                {
+                    "Fire_Spirit", (Properties.Resources.fire_spirit, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(1, 0, false)
+                        })
+                },
+                {
+                    "Electro_Spirit", (Properties.Resources.electro_spirit, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(1, 0, false)
+                        })
+                },
+                {
+                    "Prince", (Properties.Resources.prince, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, 2, false)
+                        })
+                },
+                {
+                    "Dark_Knight", (Properties.Resources.dark_knight, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, 2, false)
+                        })
+                },
+                {
+                    "Baby_Dragon", (Properties.Resources.baby_dragon, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(1, 0, true)
+                        })
+                },
+                {
+                    "Electro_Dragon", (Properties.Resources.electro_dragon, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(1, 0, true)
+                        })
+                },
+                {
+                    "Dagger_Dutchess", (Properties.Resources.dagger_dutchess, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, 1, true),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(0, 1, true),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(1, 0, true)
+                        })
+                },
+                {
+                    "Chef", (Properties.Resources.chef, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, 1, true),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(0, 1, true),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(1, 0, true)
+                        })
+                },
+                {
+                    "Ice_Wizard", (Properties.Resources.ice_wizard, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(1, 1, false)
+                        })
+                },
+                {
+                    "Electro_Wizard", (Properties.Resources.electro_wizard, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(1, 1, false)
+                        })
+                },
+                {
+                    "Executioner", (Properties.Resources.executioner, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-2, -2, false),
+                            new MoveInstruction(-2, 2, false),
+                            new MoveInstruction(2, -2, false),
+                            new MoveInstruction(2, 2, false)
+                        })
+                },
+                {
+                    "Valkyrie", (Properties.Resources.valkyrie, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-2, -2, false),
+                            new MoveInstruction(-2, 2, false),
+                            new MoveInstruction(2, -2, false),
+                            new MoveInstruction(2, 2, false)
+                        })
+                },
+                {
+                    "Golem", (Properties.Resources.golem, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(1, 1, false)
+                        })
+                },
+                {
+                    "Pekka", (Properties.Resources.pekka, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(1, 1, false)
+                        })
+                },
+                {
+                    "Hog_Rider", (Properties.Resources.hog_rider, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(0, 2, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, 2, false)
+                        })
+                },
+                {
+                    "Ram_Rider", (Properties.Resources.ram_rider, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(0, 2, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, 2, false)
+                        })
+                },
+                {
+                    "Inferno_Dragon", (Properties.Resources.inferno_dragon, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, -3, false),
+                            new MoveInstruction(0, 3, false),
+                            new MoveInstruction(-3, 0, false),
+                            new MoveInstruction(3, 0, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false)
+                        })
+                },
+                {
+                    "Phoenix", (Properties.Resources.phoenix, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, -3, false),
+                            new MoveInstruction(0, 3, false),
+                            new MoveInstruction(-3, 0, false),
+                            new MoveInstruction(3, 0, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false)
+                        })
+                },
+                {
+                    "Mega_Knight", (Properties.Resources.mega_knight, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-3, 0, false),
+                            new MoveInstruction(3, 0, false),
+                            new MoveInstruction(0, -3, false),
+                            new MoveInstruction(0, 3, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false)
+                        })
+                },
+                {
+                    "Sparky", (Properties.Resources.sparky, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(0, -4, true),
+                            new MoveInstruction(0, 4, true),
+                            new MoveInstruction(-4, 0, true),
+                            new MoveInstruction(4, 0, true)
+                        })
+                }
             };
 
             foreach (var piece in pieces)
@@ -434,13 +591,13 @@ namespace TicTacChessSlin
                     }
                     else
                     {
-                        ResetPiecePosition(); // Deny move if it's not the player's turn
+                        ResetPiecePosition();
                     }
                 }
             }
             else
             {
-                ResetPiecePosition(); // Prevent moving to non-highlighted tiles
+                ResetPiecePosition();
             }
 
             ResetAllTileColors();
@@ -554,24 +711,35 @@ namespace TicTacChessSlin
             int rows = boardGrid.GetLength(0);
             int cols = boardGrid.GetLength(1);
 
-            // Check rows
+            // Check horizontal lines
             for (int i = 0; i < rows; i++)
             {
-                if (CheckLine(boardGrid[i, 0], boardGrid[i, 1], boardGrid[i, 2])) return;
+                for (int j = 0; j < cols - 2; j++) // Ensure we don't go out of bounds
+                {
+                    if (CheckLine(boardGrid[i, j], boardGrid[i, j + 1], boardGrid[i, j + 2])) return;
+                }
             }
 
-            // Check columns
+            // Check vertical lines
             for (int j = 0; j < cols; j++)
             {
-                if (CheckLine(boardGrid[0, j], boardGrid[1, j], boardGrid[2, j])) return;
+                for (int i = 0; i < rows - 2; i++) // Ensure we don't go out of bounds
+                {
+                    if (CheckLine(boardGrid[i, j], boardGrid[i + 1, j], boardGrid[i + 2, j])) return;
+                }
             }
 
             // Check diagonals
-            if (CheckLine(boardGrid[0, 0], boardGrid[1, 1], boardGrid[2, 2])) return;
-            if (CheckLine(boardGrid[0, 2], boardGrid[1, 1], boardGrid[2, 0])) return;
+            for (int i = 0; i < rows - 2; i++) // Ensure we don't go out of bounds
+            {
+                for (int j = 0; j < cols - 2; j++) // Ensure we don't go out of bounds
+                {
+                    if (CheckLine(boardGrid[i, j], boardGrid[i + 1, j + 1], boardGrid[i + 2, j + 2])) return;
+                    if (CheckLine(boardGrid[i + 2, j], boardGrid[i + 1, j + 1], boardGrid[i, j + 2])) return;
+                }
+            }
         }
 
-        // 🏆 Checks if three tiles contain the same team's piece and handles spawn zones correctly.
         private bool CheckLine(BoardTile a, BoardTile b, BoardTile c)
         {
             if (a.PieceOnTile == null || b.PieceOnTile == null || c.PieceOnTile == null)
@@ -587,11 +755,16 @@ namespace TicTacChessSlin
             if (a.Spawn == teamSpawn && b.Spawn == teamSpawn && c.Spawn == teamSpawn)
                 return false;
 
+            // 🎯 Check if at least one of the tiles in the line is a target tile
+            if (a.TileType != "Target" && b.TileType != "Target" && c.TileType != "Target")
+                return false; // No target tile in the line, can't win.
+
             // 🎉 If we reach here, it's a valid win!
             string winningTeam = isWhite ? "White" : "Black";
             MessageBox.Show($"{winningTeam} wins!");
             return true;
         }
+
 
     }
 }
