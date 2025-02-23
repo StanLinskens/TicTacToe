@@ -554,36 +554,40 @@ namespace TicTacChessSlin
             int rows = boardGrid.GetLength(0);
             int cols = boardGrid.GetLength(1);
 
-            // Check rows and columns
+            // Check rows
             for (int i = 0; i < rows; i++)
             {
-                if (CheckLine(boardGrid[i, 0], boardGrid[i, 1], boardGrid[i, 2])) return; // Check row
+                if (CheckLine(boardGrid[i, 0], boardGrid[i, 1], boardGrid[i, 2])) return;
             }
+
+            // Check columns
             for (int j = 0; j < cols; j++)
             {
-                if (CheckLine(boardGrid[0, j], boardGrid[1, j], boardGrid[2, j])) return; // Check column
+                if (CheckLine(boardGrid[0, j], boardGrid[1, j], boardGrid[2, j])) return;
             }
 
             // Check diagonals
-            if (CheckLine(boardGrid[0, 0], boardGrid[1, 1], boardGrid[2, 2])) return; // Main diagonal
-            if (CheckLine(boardGrid[0, 2], boardGrid[1, 1], boardGrid[2, 0])) return; // Anti-diagonal
+            if (CheckLine(boardGrid[0, 0], boardGrid[1, 1], boardGrid[2, 2])) return;
+            if (CheckLine(boardGrid[0, 2], boardGrid[1, 1], boardGrid[2, 0])) return;
         }
 
-        // 🏆 Checks if three tiles contain the same non-null piece (and not in a spawn area)
+        // 🏆 Checks if three tiles contain the same team's piece and handles spawn zones correctly.
         private bool CheckLine(BoardTile a, BoardTile b, BoardTile c)
         {
             if (a.PieceOnTile == null || b.PieceOnTile == null || c.PieceOnTile == null)
-                return false;
+                return false; // No piece on some tiles, can't win.
 
             bool isWhite = a.PieceOnTile.IsWhite;
             if (b.PieceOnTile.IsWhite != isWhite || c.PieceOnTile.IsWhite != isWhite)
-                return false; // Not the same team
+                return false; // Not the same team.
 
-            // 🚫 Victory is denied if any of these tiles are in their spawn
-            if (a.Spawn != "None" || b.Spawn != "None" || c.Spawn != "None")
+            string teamSpawn = isWhite ? "White" : "Black";
+
+            // 🚫 Victory is denied if all three pieces are inside their own spawn
+            if (a.Spawn == teamSpawn && b.Spawn == teamSpawn && c.Spawn == teamSpawn)
                 return false;
 
-            // 🎉 If we reach this point, there's a winner
+            // 🎉 If we reach here, it's a valid win!
             string winningTeam = isWhite ? "White" : "Black";
             MessageBox.Show($"{winningTeam} wins!");
             return true;
