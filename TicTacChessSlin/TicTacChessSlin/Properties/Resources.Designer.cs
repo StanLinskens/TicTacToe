@@ -193,9 +193,29 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fireball1 {
+            get {
+                object obj = ResourceManager.GetObject("fireball1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap freeze {
             get {
                 object obj = ResourceManager.GetObject("freeze", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap freeze1 {
+            get {
+                object obj = ResourceManager.GetObject("freeze1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -303,6 +323,16 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap poison1 {
+            get {
+                object obj = ResourceManager.GetObject("poison1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap prince {
             get {
                 object obj = ResourceManager.GetObject("prince", resourceCulture);
@@ -326,6 +356,16 @@ namespace TicTacChessSlin.Properties {
         internal static System.Drawing.Bitmap sparky {
             get {
                 object obj = ResourceManager.GetObject("sparky", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap the_log {
+            get {
+                object obj = ResourceManager.GetObject("the_log", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

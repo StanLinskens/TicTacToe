@@ -9,7 +9,7 @@ namespace TicTacChessSlin
     public partial class Form1 : Form
     {
         int BoardStartX = 25;
-        int BoardStartY = 45;
+        int BoardStartY = 90;
         string grid = "5x5";
         int gap = 14;
 
@@ -20,10 +20,16 @@ namespace TicTacChessSlin
         private ChessPiece selectedPiece;
         private bool isDragging = false;
 
+        private Spell selectedSpell;
+        private Point spellOriginalPosition;
+        private bool isDraggingSpell = false;
+
         private BoardTile[,] boardGrid; // 2D array to store tiles
 
         private List<ChessPiece> displayPieces = new List<ChessPiece>(); // Pieces in the UI display
         private List<ChessPiece> boardPieces = new List<ChessPiece>(); // Pieces on the board
+
+        private List<Spell> displaySpells = new List<Spell>(); // SPells in the UI display
 
         public Form1()
         {
@@ -34,6 +40,8 @@ namespace TicTacChessSlin
         {
             BoardCreation(grid);
             CreateChessPieces();
+            CreateSpells();
+            DisplaySpells();
 
             // Hide all pieces on startup
             foreach (var piece in PieceLibrary.GetAllPieces())
@@ -646,13 +654,15 @@ namespace TicTacChessSlin
 
         private void ValidSpawn(bool isWhite)
         {
+            // Count pieces for the current team
+            int teamCount = boardPieces.Count(piece => piece.IsWhite == isWhite);
+
+            // Only allow spawning if there are less than 3 pieces for the team
+            if (teamCount >= 3) return;
+
             foreach (BoardTile tile in boardGrid)
             {
-                if (isWhite && tile.Spawn == "White")
-                {
-                    tile.HighlightTile();
-                }
-                else if (!isWhite && tile.Spawn == "Black")
+                if ((isWhite && tile.Spawn == "White") || (!isWhite && tile.Spawn == "Black"))
                 {
                     tile.HighlightTile();
                 }
@@ -683,6 +693,7 @@ namespace TicTacChessSlin
         {
             // Update the label text
             lblTeamsTurn.Text = isWhiteTurn ? "White's Turn" : "Black's Turn";
+            DisplaySpells();
 
             foreach (ChessPiece piece in boardPieces)
             {
@@ -796,6 +807,139 @@ namespace TicTacChessSlin
             basic basicForm = new basic();
             basicForm.Show();
         }
+
+        //spells
+        private void CreateSpells()
+        {
+            // Define spells in a dictionary with name, image, and other attributes
+            Dictionary<string, (Image, string)> spells = new Dictionary<string, (Image, string)>
+            {
+                { "Fireball", (Properties.Resources.fireball, "Fireball Description") },
+                { "Frozen", (Properties.Resources.freeze, "Frozen Description") },
+                { "Log", (Properties.Resources.the_log, "Log Description") },
+                { "Poison", (Properties.Resources.poison, "Poison Description") }
+            };
+
+            // Create Panels for each spell and add them to the display
+            foreach (var spell in spells)
+            {
+                // Create a Panel for the spell
+                Panel spellPanel = new Panel
+                {
+                    Width = 80,
+                    Height = 80,
+                    BackgroundImage = spell.Value.Item1,
+                    BackColor = Color.Transparent,
+                    BackgroundImageLayout = ImageLayout.Zoom,
+                    Name = spell.Key,
+                    Enabled = true,
+                };
+
+                this.Controls.Add(spellPanel);
+
+                // Create the spell object and store it in a list (or library)
+                Spell newSpell = new Spell(spell.Key, spellPanel);
+                displaySpells.Add(newSpell);
+
+
+                spellPanel.MouseDown += Spell_MouseDown;
+                spellPanel.MouseUp += Spell_MouseUp;
+                spellPanel.MouseMove += Spell_MouseMove;
+
+
+            }
+        }
+
+        private void DisplaySpells()
+        {
+            int x = 2;
+            int y = 18;
+            int spacingX = 85;
+            int spacingY = 85;
+            int columns = 3;
+
+            int count = 0;
+
+            // Clear previous controls before adding new ones
+            gbxSpellsHolder.Controls.Clear();
+
+            foreach (var spell in displaySpells)
+            {
+                spell.SpellPanel.Enabled = true;
+                spell.SpellPanel.Visible = true;
+                spell.SpellPanel.Location = new Point(x, y);
+                gbxSpellsHolder.Controls.Add(spell.SpellPanel);
+
+                count++;
+
+                if (count % columns == 0)  // Move to the next row after filling a column
+                {
+                    x = 5;
+                    y += spacingY;
+                }
+                else
+                {
+                    x += spacingX;
+                }
+            }
+        }
+
+        private void Spell_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is Panel spellPanel)
+            {
+                selectedSpell = displaySpells.FirstOrDefault(s => s.SpellPanel == spellPanel);
+                if (selectedSpell == null) return;
+
+                isDraggingSpell = true;
+                spellOriginalPosition = spellPanel.Location;
+                spellPanel.Parent = this; // Move spell out of `gbxSpellsHolder` so it's visible
+                spellPanel.BringToFront();
+            }
+        }
+
+        private void Spell_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDraggingSpell && selectedSpell != null)
+            {
+                selectedSpell.SpellPanel.Location = new Point(
+                    selectedSpell.SpellPanel.Location.X + e.X - selectedSpell.SpellPanel.Width / 2,
+                    selectedSpell.SpellPanel.Location.Y + e.Y - selectedSpell.SpellPanel.Height / 2
+                );
+            }
+        }
+
+        private void Spell_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!isDraggingSpell || selectedSpell == null) return;
+            isDraggingSpell = false;
+
+            // Check if spell was dropped on the board
+            Point mousePosition = this.PointToClient(Cursor.Position);
+            bool spellUsed = false;
+
+            foreach (var tile in boardGrid)
+            {
+                Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
+                if (tileBounds.Contains(mousePosition))
+                {
+                    //ApplySpellEffect(selectedSpell, tile);
+                    spellUsed = true;
+                    break;
+                }
+            }
+
+            // If spell wasn't used, return it to the original position
+            if (!spellUsed)
+            {
+                selectedSpell.SpellPanel.Parent = gbxSpellsHolder;
+                selectedSpell.SpellPanel.Location = spellOriginalPosition;
+            }
+
+            selectedSpell = null;
+        }
+
+
 
     }
 }
