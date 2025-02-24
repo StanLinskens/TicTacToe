@@ -14,7 +14,7 @@ namespace TicTacChessSlin
     {
         int BoardStartX = 25;
         int BoardStartY = 40;
-        string grid = "7x7";
+        string grid = "9x9";
         int gap = 14;
 
         private Point pieceOriginalPositionManual;
@@ -509,86 +509,85 @@ namespace TicTacChessSlin
             return null; // Out of bounds
         }
 
+        private void HighlightValidMoves(ChessPiece piece)
+        {
+            if (piece == null) return;
+
+            // Reset previous highlights
+            ResetTileHighlights();
+
+            // Find center tile
+            int centerRow = boardGrid.GetLength(0) / 2;
+            int centerCol = boardGrid.GetLength(1) / 2;
+            BoardTile centerTile = boardGrid[centerRow, centerCol];
+
+            // Temporarily move the piece to the center
+            int originalRow = piece.Row;
+            int originalCol = piece.Col;
+            piece.Row = centerRow;
+            piece.Col = centerCol;
+
+            // Get valid moves from the center
+            List<BoardTile> validMoves = GetValidMoves(piece);
+
+            // Restore original position
+            piece.Row = originalRow;
+            piece.Col = originalCol;
+
+            // Highlight valid move tiles
+            foreach (BoardTile tile in validMoves)
+            {
+                tile.TilePanel.BackColor = Color.Yellow; // Change to any color you like
+            }
+        }
+
+
+        private void ResetTileHighlights()
+        {
+            foreach (var row in boardGrid)
+            {
+                foreach (var tile in boardGrid)
+                {
+                    tile.TilePanel.BackColor = Color.LightGray; // Reset to default color
+                }
+            }
+        }
+
+        // Modify Piece_MouseClick to call HighlightValidMoves()
         private void Piece_MouseClick(object sender, EventArgs e)
         {
             if (sender is Panel piecePanel)
             {
-                selectedPieceManual = PieceLibrary.GetPieceByPanel(piecePanel);
-                if (selectedPieceManual == null) return;
+                ChessPiece clickedPiece = PieceLibrary.GetPieceByPanel(piecePanel);
+                if (clickedPiece == null) return;
+
+                // Highlight valid moves
+                HighlightValidMoves(clickedPiece);
 
                 // Find center tile
                 int centerRow = boardGrid.GetLength(0) / 2;
                 int centerCol = boardGrid.GetLength(1) / 2;
                 BoardTile centerTile = boardGrid[centerRow, centerCol];
 
-                // Ensure the center is empty
+                // Ensure center tile is empty before moving
                 if (centerTile.PieceOnTile != null)
                 {
-                    Console.WriteLine("Center tile is occupied!");
-                    return;
+                    ChessPiece pieceToMove = centerTile.PieceOnTile;
+                    centerTile.PieceOnTile = null; // Clear the tile reference
+                    MovePieceToDisplay(pieceToMove);
                 }
 
-                piecePanel.Parent = this;
-                // Move the piece to the center
-                MovePieceToTile(selectedPieceManual, centerTile);
+                // Move clicked piece to center
+                MovePieceToTile(clickedPiece, centerTile);
             }
         }
 
-        private void PlacePieceInCenter(ChessPiece newPiece)
-        {
-            if (boardGrid == null) return;
-
-            int centerRow = boardGrid.GetLength(0) / 2;
-            int centerCol = boardGrid.GetLength(1) / 2;
-
-            BoardTile centerTile = boardGrid[centerRow, centerCol];
-
-            if (centerTile == null)
-            {
-                Console.WriteLine("Error: Center tile not found.");
-                return;
-            }
-
-            // Check if a piece is already in the center
-            if (centerTile.PieceOnTile != null)
-            {
-                ChessPiece oldPiece = centerTile.PieceOnTile;
-
-                // Remove old piece from board list and move it back to display list
-                boardPiecesManual.Remove(oldPiece);
-                displayPiecesManual.Add(oldPiece);
-
-                // Move the old piece back to the display UI
-                oldPiece.PiecePanel.Location = GetNextAvailableDisplaySlot();
-                gbxPiecesHolderManual.Controls.Add(oldPiece.PiecePanel);
-                oldPiece.PiecePanel.BringToFront();
-                Console.WriteLine($"Moved {oldPiece.PieceName} back to display.");
-            }
-
-            // Place new piece in center
-            MovePieceToTile(newPiece, centerTile);
-            boardPiecesManual.Add(newPiece);
-            displayPiecesManual.Remove(newPiece);
-
-            Console.WriteLine($"Placed {newPiece.PieceName} in center ({centerRow}, {centerCol}).");
-        }
-
-        private Point GetNextAvailableDisplaySlot()
-        {
-            int x = 5, y = 18;
-            int spacingX = 85, spacingY = 85;
-            int columns = 2;
-            int count = displayPiecesManual.Count;
-
-            x += (count % columns) * spacingX;
-            y += (count / columns) * spacingY;
-
-            return new Point(x, y);
-        }
 
         private void MovePieceToTile(ChessPiece piece, BoardTile tile)
         {
-            // Remove this piece from any tile that has it
+            if (piece == null || tile == null) return;
+
+            // Remove piece from previous tile
             foreach (var t in boardGrid)
             {
                 if (t.PieceOnTile == piece)
@@ -597,17 +596,46 @@ namespace TicTacChessSlin
                 }
             }
 
-            // Now move the piece to the new tile
+            // Move to new position
             piece.PiecePanel.Location = tile.TilePanel.Location;
+            piece.PiecePanel.BringToFront();
+
+            // Ensure UI updates
+            piece.PiecePanel.Invalidate();
+            piece.PiecePanel.Update();
+
+            // Update piece position
             piece.Row = tile.Row;
             piece.Col = tile.Col;
 
-            // Set the new tile to hold the piece
+            // Assign piece to tile
             tile.PieceOnTile = piece;
-            
-           displayPiecesManual.Remove(piece);
-           boardPiecesManual.Add(piece); 
+
+            // Manage lists
+            if (boardPiecesManual.Contains(piece))
+                boardPiecesManual.Remove(piece);
+
+            if (!displayPiecesManual.Contains(piece))
+                displayPiecesManual.Add(piece);
         }
+
+
+        private void MovePieceToDisplay(ChessPiece piece)
+        {
+            if (piece == null) return;
+
+            piece.PiecePanel.Parent = gbxPiecesHolderManual;
+
+            // Remove piece from board list
+            boardPiecesManual.Remove(piece);
+
+            // Add piece back to display list
+            displayPiecesManual.Add(piece);
+
+            // Move piece back to the groupbox
+            piece.PiecePanel.Parent = gbxPiecesHolderManual;
+        }
+
 
     }
 }

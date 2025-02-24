@@ -36,9 +36,9 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(816, 13);
+            this.rbFalse.Location = new System.Drawing.Point(1010, 5);
             this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(52, 17);
+            this.rbFalse.Size = new System.Drawing.Size(59, 20);
             this.rbFalse.TabIndex = 4;
             this.rbFalse.TabStop = true;
             this.rbFalse.Tag = "false";
@@ -49,9 +49,9 @@
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(696, 13);
+            this.rbTrue.Location = new System.Drawing.Point(890, 5);
             this.rbTrue.Name = "rbTrue";
-            this.rbTrue.Size = new System.Drawing.Size(53, 17);
+            this.rbTrue.Size = new System.Drawing.Size(60, 20);
             this.rbTrue.TabIndex = 2;
             this.rbTrue.TabStop = true;
             this.rbTrue.Tag = "true";
@@ -61,7 +61,7 @@
             // 
             // gbxPiecesHolderManual
             // 
-            this.gbxPiecesHolderManual.Location = new System.Drawing.Point(696, 36);
+            this.gbxPiecesHolderManual.Location = new System.Drawing.Point(890, 28);
             this.gbxPiecesHolderManual.Name = "gbxPiecesHolderManual";
             this.gbxPiecesHolderManual.Size = new System.Drawing.Size(172, 534);
             this.gbxPiecesHolderManual.TabIndex = 3;
@@ -72,7 +72,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 707);
+            this.ClientSize = new System.Drawing.Size(1093, 900);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
             this.Controls.Add(this.gbxPiecesHolderManual);
