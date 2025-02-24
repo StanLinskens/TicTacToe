@@ -1,0 +1,593 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace TicTacChessSlin
+{
+    public partial class basic : Form
+    {
+        int BoardStartX = 40;
+        int BoardStartY = 125;
+        string grid = "3x3";
+        int gap = 14;
+
+        bool ActiveGame = false;
+        private bool isWhiteTurn = true;
+
+        private Point pieceOriginalPosition;
+        private ChessPiece selectedPiece;
+        private bool isDragging = false;
+
+        private BoardTile[,] boardGrid; // 2D array to store tiles
+
+        private List<ChessPiece> chessPieces = new List<ChessPiece>(); // List to store pieces
+
+        private List<ChessPiece> displayPieces = new List<ChessPiece>(); // Pieces in the UI display
+        private List<ChessPiece> boardPieces = new List<ChessPiece>();
+
+        public basic()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            BoardCreation(grid);
+            CreateChessPieces();
+
+            // Hide all pieces on startup
+            foreach (var piece in PieceLibrary.GetAllPieces())
+            {
+                piece.PiecePanel.Enabled = false;
+                piece.PiecePanel.Visible = false;
+            }
+        }
+
+        // board logic
+        public void BoardCreation(string gridSize)
+        {
+            // Convert string to row and column
+            string[] sizeParts = gridSize.Split('x'); // Expecting format like "3x3"
+            if (sizeParts.Length != 2 || !int.TryParse(sizeParts[0], out int gridRow) || !int.TryParse(sizeParts[1], out int gridCol))
+            {
+                Console.WriteLine("Invalid grid size format. Use format like '3x3'.");
+                return;
+            }
+
+            boardGrid = new BoardTile[gridRow, gridCol];
+
+            int tileID = 1;
+            for (int row = 0; row < gridRow; row++)
+            {
+                for (int col = 0; col < gridCol; col++)
+                {
+                    string tileName = $"{(char)('A' + row)}{col + 1}"; // Example: A1, B2, C3
+                    string PanelName = $"pnl{tileName}";
+
+                    Panel newPanel = new Panel();
+                    newPanel.Name = tileName;
+                    newPanel.Width = 80;
+                    newPanel.Height = 80;
+                    newPanel.BackColor = Color.LightGray;
+
+                    // Set the position: top-left panel starts at (BoardStart, BoardStart)
+                    newPanel.Location = new Point(
+                        BoardStartX + col * (newPanel.Width + gap),
+                        BoardStartY + row * (newPanel.Height + gap)
+                    );
+
+                    // Determine spawn zones (assuming the first and last rows are spawn points)
+                    string spawn = "None";
+                    if (row == 0) spawn = "White";
+                    if (row == gridRow - 1) spawn = "Black";
+
+
+                    this.Controls.Add(newPanel);
+
+                    boardGrid[row, col] = new BoardTile(newPanel, tileName, tileID++, row, col, spawn);
+                }
+            }
+
+            Console.WriteLine($"Board of size {gridRow}x{gridCol} created.");
+        }
+
+        private void CreateChessPieces()
+        {
+            Dictionary<string, (Image, bool, List<MoveInstruction>)> pieces = new Dictionary<string, (Image, bool, List<MoveInstruction>)>
+            {
+{
+    "Wizard", (Properties.Resources.wizard, true, new List<MoveInstruction>
+        {
+            new MoveInstruction(-1, -1, true),
+            new MoveInstruction(-1, 1, true),
+            new MoveInstruction(1, -1, true),
+            new MoveInstruction(1, 1, true)
+        })
+},
+{
+    "Witch", (Properties.Resources.witch, false, new List<MoveInstruction>
+        {
+            new MoveInstruction(-1, -1, true),
+            new MoveInstruction(-1, 1, true),
+            new MoveInstruction(1, -1, true),
+            new MoveInstruction(1, 1, true)
+        })
+},
+{
+    "Crossbow", (Properties.Resources.crossbow, false, new List<MoveInstruction>
+        {
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true),
+            new MoveInstruction(0, -1, true),
+            new MoveInstruction(0, 1, true)
+        })
+},
+{
+    "Inferno_Tower", (Properties.Resources.inferno_tower, true, new List<MoveInstruction>
+        {
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true),
+            new MoveInstruction(0, -1, true),
+            new MoveInstruction(0, 1, true)
+        })
+},
+{
+    "Fire_Spirit", (Properties.Resources.fire_spirit, true, new List<MoveInstruction>
+        {
+            new MoveInstruction(0, -1, false),
+            new MoveInstruction(0, 1, false),
+            new MoveInstruction(-1, 0, false),
+            new MoveInstruction(1, 0, false)
+        })
+},
+{
+    "Electro_Spirit", (Properties.Resources.electro_spirit, false, new List<MoveInstruction>
+        {
+            new MoveInstruction(0, -1, false),
+            new MoveInstruction(0, 1, false),
+            new MoveInstruction(-1, 0, false),
+            new MoveInstruction(1, 0, false)
+        })
+},
+{
+    "Prince", (Properties.Resources.prince, true, new List<MoveInstruction>
+        {
+            new MoveInstruction(-2, -1, false),
+            new MoveInstruction(-2, 1, false),
+            new MoveInstruction(2, -1, false),
+            new MoveInstruction(2, 1, false),
+            new MoveInstruction(-1, -2, false),
+            new MoveInstruction(1, -2, false),
+            new MoveInstruction(-1, 2, false),
+            new MoveInstruction(1, 2, false)
+        })
+},
+{
+    "Dark_Knight", (Properties.Resources.dark_knight, false, new List<MoveInstruction>
+        {
+            new MoveInstruction(-2, -1, false),
+            new MoveInstruction(-2, 1, false),
+            new MoveInstruction(2, -1, false),
+            new MoveInstruction(2, 1, false),
+            new MoveInstruction(-1, -2, false),
+            new MoveInstruction(1, -2, false),
+            new MoveInstruction(-1, 2, false),
+            new MoveInstruction(1, 2, false)
+        })
+},
+{
+    "Baby_Dragon", (Properties.Resources.baby_dragon, true, new List<MoveInstruction>
+        {
+            new MoveInstruction(0, -1, false),
+            new MoveInstruction(0, 1, false),
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true)
+        })
+},
+{
+    "Electro_Dragon", (Properties.Resources.electro_dragon, false, new List<MoveInstruction>
+        {
+            new MoveInstruction(0, -1, false),
+            new MoveInstruction(0, 1, false),
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true)
+        })
+},
+{
+    "Dagger_Dutchess", (Properties.Resources.dagger_dutchess, false, new List<MoveInstruction>
+        {
+            new MoveInstruction(-1, -1, true),
+            new MoveInstruction(-1, 1, true),
+            new MoveInstruction(1, -1, true),
+            new MoveInstruction(1, 1, true),
+            new MoveInstruction(0, -1, true),
+            new MoveInstruction(0, 1, true),
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true)
+        })
+},
+{
+    "Chef", (Properties.Resources.chef, true, new List<MoveInstruction>
+        {
+            new MoveInstruction(-1, -1, true),
+            new MoveInstruction(-1, 1, true),
+            new MoveInstruction(1, -1, true),
+            new MoveInstruction(1, 1, true),
+            new MoveInstruction(0, -1, true),
+            new MoveInstruction(0, 1, true),
+            new MoveInstruction(-1, 0, true),
+            new MoveInstruction(1, 0, true)
+        })
+}
+
+
+            };
+
+            foreach (var piece in pieces)
+            {
+                Panel piecePanel = new Panel
+                {
+                    Width = 80,
+                    Height = 80,
+                    BackgroundImage = piece.Value.Item1,
+                    BackColor = Color.Transparent,
+                    BackgroundImageLayout = ImageLayout.Zoom,
+                    Name = piece.Key,
+                    Enabled = false,
+                };
+
+                this.Controls.Add(piecePanel);
+
+                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
+                displayPieces.Add(newPiece);
+
+                piecePanel.MouseDown += Piece_MouseDown;
+                piecePanel.MouseUp += Piece_MouseUp;
+                piecePanel.MouseMove += Piece_MouseMove;
+
+                PieceLibrary.AddOrUpdatePiece(piece.Key, newPiece);
+            }
+        }
+
+        private void DisplayPieces(bool showTruePieces)
+        {
+            int x = 2;
+            int y = 18;
+            int spacingX = 85;
+            int spacingY = 85;
+            int columns = 2;
+
+            int count = 0;
+
+            foreach (var piece in displayPieces)
+            {
+                if (piece.IsWhite == showTruePieces)
+                {
+                    piece.PiecePanel.Enabled = true;
+                    piece.PiecePanel.Visible = true;
+                    piece.PiecePanel.Location = new Point(x, y);
+                    gbxPiecesHolder.Controls.Add(piece.PiecePanel);
+
+                    count++;
+
+                    if (count % columns == 0)  // Move to the next row after filling a column
+                    {
+                        x = 5;
+                        y += spacingY;
+                    }
+                    else
+                    {
+                        x += spacingX;
+                    }
+                }
+                else
+                {
+                    piece.PiecePanel.Enabled = false;
+                    piece.PiecePanel.Visible = false;
+                }
+            }
+        }
+
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((System.Windows.Forms.RadioButton)sender).Checked)
+            {
+                bool showTruePieces = ((System.Windows.Forms.RadioButton)sender).Tag.ToString() == "true";
+                DisplayPieces(showTruePieces);
+            }
+        }
+
+        private List<BoardTile> GetValidMoves(ChessPiece piece)
+        {
+            List<BoardTile> validMoves = new List<BoardTile>();
+
+            foreach (var rule in piece.MovementRules) // ✅ Now correctly using MovementRules
+            {
+                int newRow = piece.Row;
+                int newCol = piece.Col;
+
+                while (true)
+                {
+                    newRow += rule.RowChange;
+                    newCol += rule.ColChange;
+
+                    BoardTile tile = GetTileAt(newRow, newCol);
+
+                    // Stop if out of bounds or occupied
+                    if (tile == null || tile.PieceOnTile != null)
+                        break;
+
+                    validMoves.Add(tile);
+
+                    // Stop if movement is not infinite (like a Knight or Pawn)
+                    if (!rule.IsInfinite)
+                        break;
+                }
+            }
+
+            return validMoves;
+        }
+
+        private BoardTile GetTileAt(int row, int col)
+        {
+            if (row >= 0 && row < boardGrid.GetLength(0) && col >= 0 && col < boardGrid.GetLength(1))
+            {
+                return boardGrid[row, col];
+            }
+            return null; // Out of bounds
+        }
+
+        private void Piece_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is Panel piecePanel)
+            {
+                selectedPiece = PieceLibrary.GetPieceByPanel(piecePanel);
+                if (selectedPiece == null) return;
+
+                if (ActiveGame && selectedPiece.IsWhite != isWhiteTurn)
+                {
+                    selectedPiece = null;
+                    return;
+                }
+
+                isDragging = true;
+                pieceOriginalPosition = piecePanel.Location;
+                piecePanel.Parent = this;
+                piecePanel.BringToFront();
+
+                ResetAllTileColors(); // Reset previous highlights
+
+                if (!ActiveGame)
+                {
+                    // Highlight only valid spawn locations
+                    ValidSpawn(selectedPiece.IsWhite);
+                }
+                else
+                {
+                    // Highlight valid moves for the selected piece
+                    List<BoardTile> validMoves = GetValidMoves(selectedPiece);
+                    foreach (var tile in validMoves)
+                    {
+                        tile.HighlightTile();
+                    }
+                }
+            }
+        }
+
+        private void Piece_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging && selectedPiece != null)
+            {
+                // Move piece with the mouse
+                selectedPiece.PiecePanel.Location = new Point(
+                    selectedPiece.PiecePanel.Location.X + e.X - selectedPiece.PiecePanel.Width / 2,
+                    selectedPiece.PiecePanel.Location.Y + e.Y - selectedPiece.PiecePanel.Height / 2
+                );
+            }
+        }
+
+        private void Piece_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!isDragging || selectedPiece == null) return;
+            isDragging = false;
+
+            Point mousePosition = selectedPiece.PiecePanel.Parent.PointToClient(Cursor.Position);
+            BoardTile hoveredTile = null;
+
+            foreach (var tile in boardGrid)
+            {
+                Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
+                if (tileBounds.Contains(mousePosition))
+                {
+                    hoveredTile = tile;
+                    break;
+                }
+            }
+
+            if (hoveredTile != null && hoveredTile.PieceOnTile == null && hoveredTile.TilePanel.BackColor == Color.LightGreen)
+            {
+                if (!ActiveGame)
+                {
+                    // 🔹 Enforce spawn placement before game starts
+                    if ((selectedPiece.IsWhite && hoveredTile.Spawn == "White") ||
+                        (!selectedPiece.IsWhite && hoveredTile.Spawn == "Black"))
+                    {
+                        MovePieceToTile(selectedPiece, hoveredTile);
+                    }
+                    else
+                    {
+                        ResetPiecePosition();
+                    }
+                }
+                else
+                {
+                    // 🔹 Ensure only the correct team moves during the game
+                    if ((selectedPiece.IsWhite && isWhiteTurn) || (!selectedPiece.IsWhite && !isWhiteTurn))
+                    {
+                        MovePieceToTile(selectedPiece, hoveredTile);
+                        isWhiteTurn = !isWhiteTurn;
+                        UpdateTurnLabel();
+
+                        CheckForWinner();
+                    }
+                    else
+                    {
+                        ResetPiecePosition(); // Deny move if it's not the player's turn
+                    }
+                }
+            }
+            else
+            {
+                ResetPiecePosition(); // Prevent moving to non-highlighted tiles
+            }
+
+            ResetAllTileColors();
+            selectedPiece = null;
+        }
+
+        private void MovePieceToTile(ChessPiece piece, BoardTile tile)
+        {
+            // Remove this piece from any tile that has it
+            foreach (var t in boardGrid)
+            {
+                if (t.PieceOnTile == piece)
+                {
+                    t.PieceOnTile = null;
+                }
+            }
+
+            // Now move the piece to the new tile
+            piece.PiecePanel.Location = tile.TilePanel.Location;
+            piece.Row = tile.Row;
+            piece.Col = tile.Col;
+
+            // Set the new tile to hold the piece
+            tile.PieceOnTile = piece;
+
+            if (!ActiveGame)
+            {
+                displayPieces.Remove(piece);
+                boardPieces.Add(piece);
+            }
+        }
+
+        private void ResetPiecePosition()
+        {
+            if (selectedPiece != null)
+            {
+                selectedPiece.PiecePanel.Location = pieceOriginalPosition;
+            }
+        }
+
+        private void ResetAllTileColors()
+        {
+            foreach (var tile in boardGrid)
+            {
+                tile.ResetTileColor();
+            }
+        }
+
+        private void ValidSpawn(bool isWhite)
+        {
+            foreach (BoardTile tile in boardGrid)
+            {
+                if (isWhite && tile.Spawn == "White")
+                {
+                    tile.HighlightTile();
+                }
+                else if (!isWhite && tile.Spawn == "Black")
+                {
+                    tile.HighlightTile();
+                }
+            }
+        }
+
+        private void btnGameStatus_Click(object sender, EventArgs e)
+        {
+            // Count pieces with true and false in their boolean property
+            int trueCount = boardPieces.Count(piece => piece.IsWhite);
+            int falseCount = boardPieces.Count(piece => !piece.IsWhite);
+
+            // Ensure at least 3 of each before starting
+            if (trueCount >= 3 && falseCount >= 3)
+            {
+                ActiveGame = !ActiveGame;
+                btnGameStatus.Text = ActiveGame ? "Stop Game" : "Start Game";
+                isWhiteTurn = true;
+                UpdateTurnLabel();
+            }
+            else
+            {
+                MessageBox.Show("You need at least 3 pieces for white and 3 pieces with for black to start the game.", "Cannot Start Game", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void UpdateTurnLabel()
+        {
+            // Update the label text
+            lblTeamsTurn.Text = isWhiteTurn ? "White's Turn" : "Black's Turn";
+
+            foreach (ChessPiece piece in boardPieces)
+            {
+                // Update the panel colors based on the turn
+                if (isWhiteTurn)
+                {
+                    if (piece.IsWhite)
+                        piece.PiecePanel.BackColor = Color.Blue;  // Blue for white team
+                    else
+                        piece.PiecePanel.BackColor = Color.White;  // White for black team
+                }
+                else
+                {
+                    if (piece.IsWhite)
+                        piece.PiecePanel.BackColor = Color.White;  // White for white team
+                    else
+                        piece.PiecePanel.BackColor = Color.Red;  // Red for black team
+                }
+            }
+        }
+
+        private void CheckForWinner()
+        {
+            int rows = boardGrid.GetLength(0);
+            int cols = boardGrid.GetLength(1);
+
+            // Check rows and columns
+            for (int i = 0; i < rows; i++)
+            {
+                if (CheckLine(boardGrid[i, 0], boardGrid[i, 1], boardGrid[i, 2])) return; // Check row
+            }
+            for (int j = 0; j < cols; j++)
+            {
+                if (CheckLine(boardGrid[0, j], boardGrid[1, j], boardGrid[2, j])) return; // Check column
+            }
+
+            // Check diagonals
+            if (CheckLine(boardGrid[0, 0], boardGrid[1, 1], boardGrid[2, 2])) return; // Main diagonal
+            if (CheckLine(boardGrid[0, 2], boardGrid[1, 1], boardGrid[2, 0])) return; // Anti-diagonal
+        }
+
+        // 🏆 Checks if three tiles contain the same non-null piece (and not in a spawn area)
+        private bool CheckLine(BoardTile a, BoardTile b, BoardTile c)
+        {
+            if (a.PieceOnTile == null || b.PieceOnTile == null || c.PieceOnTile == null)
+                return false;
+
+            bool isWhite = a.PieceOnTile.IsWhite;
+            if (b.PieceOnTile.IsWhite != isWhite || c.PieceOnTile.IsWhite != isWhite)
+                return false; // Not the same team
+
+            // 🚫 Victory is denied if any of these tiles are in their spawn
+            if (a.Spawn != "None" || b.Spawn != "None" || c.Spawn != "None")
+                return false;
+
+            // 🎉 If we reach this point, there's a winner
+            string winningTeam = isWhite ? "White" : "Black";
+            MessageBox.Show($"{winningTeam} wins!");
+            return true;
+        }
+
+    }
+}

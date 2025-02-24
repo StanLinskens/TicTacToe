@@ -65,6 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="basic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="basic.Designer.cs" />
     <Compile Include="boardCreator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

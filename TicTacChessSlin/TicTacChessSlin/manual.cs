@@ -13,12 +13,17 @@ namespace TicTacChessSlin
     public partial class manual: Form
     {
         int BoardStartX = 25;
-        int BoardStartY = 50;
-        string grid = "5x5";
+        int BoardStartY = 40;
+        string grid = "7x7";
         int gap = 14;
 
+        private Point pieceOriginalPositionManual;
+        private ChessPiece selectedPieceManual;
+
         private BoardTile[,] boardGrid; // 2D array to store tiles
-        private List<ChessPiece> displayPieces = new List<ChessPiece>(); // Pieces in the UI display
+        private List<ChessPiece> displayPiecesManual = new List<ChessPiece>(); // Pieces in the UI display
+        private List<ChessPiece> boardPiecesManual = new List<ChessPiece>(); // Pieces on the board
+
 
         public manual()
         {
@@ -44,7 +49,7 @@ namespace TicTacChessSlin
             string[] sizeParts = gridSize.Split('x'); // Expecting format like "5x5"
             if (sizeParts.Length != 2 || !int.TryParse(sizeParts[0], out int gridRow) || !int.TryParse(sizeParts[1], out int gridCol))
             {
-                Console.WriteLine("Invalid grid size format. Use format like '5x5'.");
+                //Console.WriteLine("Invalid grid size format. Use format like '5x5'.");
                 return;
             }
 
@@ -82,7 +87,7 @@ namespace TicTacChessSlin
                     Image tileImage = null;
                     if (isTargetTile)
                     {
-                        tileImage = Properties.Resources.button;
+                        //tileImage = Properties.Resources.button;
                         //newPanel.BackColor = Color.Gold;
                     }
 
@@ -93,7 +98,7 @@ namespace TicTacChessSlin
                 }
             }
 
-            Console.WriteLine($"Board of size {gridRow}x{gridCol} created with target tiles for win condition.");
+            //Console.WriteLine($"Board of size {gridRow}x{gridCol} created with target tiles for win condition.");
         }
 
         private void CreateChessPieces()
@@ -228,26 +233,26 @@ namespace TicTacChessSlin
                     "Ice_Wizard", (Properties.Resources.ice_wizard, true, new List<MoveInstruction>
                         {
                             new MoveInstruction(-1, -1, false),
-                            new MoveInstruction(-1, 0, false),
                             new MoveInstruction(-1, 1, false),
-                            new MoveInstruction(0, -1, false),
-                            new MoveInstruction(0, 1, false),
                             new MoveInstruction(1, -1, false),
-                            new MoveInstruction(1, 0, false),
-                            new MoveInstruction(1, 1, false)
+                            new MoveInstruction(1, 1, false),
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(0, 2, false)
                         })
                 },
                 {
                     "Electro_Wizard", (Properties.Resources.electro_wizard, false, new List<MoveInstruction>
                         {
                             new MoveInstruction(-1, -1, false),
-                            new MoveInstruction(-1, 0, false),
                             new MoveInstruction(-1, 1, false),
-                            new MoveInstruction(0, -1, false),
-                            new MoveInstruction(0, 1, false),
                             new MoveInstruction(1, -1, false),
-                            new MoveInstruction(1, 0, false),
-                            new MoveInstruction(1, 1, false)
+                            new MoveInstruction(1, 1, false),
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(0, 2, false)
                         })
                 },
                 {
@@ -390,9 +395,9 @@ namespace TicTacChessSlin
                 this.Controls.Add(piecePanel);
 
                 ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
-                displayPieces.Add(newPiece);
+                displayPiecesManual.Add(newPiece);
 
-                //piecePanel.MouseClick += Piece_MouseClick;
+                piecePanel.MouseClick += Piece_MouseClick;
 
 
                 PieceLibrary.AddOrUpdatePiece(piece.Key, newPiece);
@@ -401,28 +406,43 @@ namespace TicTacChessSlin
 
         private void DisplayPieces(bool showTruePieces)
         {
+            if (displayPiecesManual == null || gbxPiecesHolderManual == null)
+            {
+                Console.WriteLine("Error: displayPiecesManual or gbxPiecesHolderManual is null!");
+                return;
+            }
+
+            Console.WriteLine($"Pieces count: {displayPiecesManual.Count}");
+
             int x = 2;
             int y = 18;
             int spacingX = 85;
             int spacingY = 85;
             int columns = 2;
-
             int count = 0;
 
-            foreach (var piece in displayPieces)
+            gbxPiecesHolderManual.Controls.Clear(); // Ensure no old controls are interfering
+
+            foreach (var piece in displayPiecesManual)
             {
+                if (piece.PiecePanel == null)
+                {
+                    Console.WriteLine($"Error: Piece {piece} has a null Panel!");
+                    continue;
+                }
+
                 if (piece.IsWhite == showTruePieces)
                 {
                     piece.PiecePanel.Enabled = true;
                     piece.PiecePanel.Visible = true;
                     piece.PiecePanel.Location = new Point(x, y);
-                    gbxPiecesHolder.Controls.Add(piece.PiecePanel);
+                    gbxPiecesHolderManual.Controls.Add(piece.PiecePanel);
+                    Console.WriteLine($"Placed {piece} at ({x}, {y})");
 
                     count++;
-
-                    if (count % columns == 0)  // Move to the next row after filling a column
+                    if (count % columns == 0)
                     {
-                        x = 5;
+                        x = 2;  // Fix resetting X
                         y += spacingY;
                     }
                     else
@@ -436,6 +456,8 @@ namespace TicTacChessSlin
                     piece.PiecePanel.Visible = false;
                 }
             }
+
+            gbxPiecesHolderManual.Refresh();
         }
 
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
@@ -485,6 +507,106 @@ namespace TicTacChessSlin
                 return boardGrid[row, col];
             }
             return null; // Out of bounds
+        }
+
+        private void Piece_MouseClick(object sender, EventArgs e)
+        {
+            if (sender is Panel piecePanel)
+            {
+                selectedPieceManual = PieceLibrary.GetPieceByPanel(piecePanel);
+                if (selectedPieceManual == null) return;
+
+                // Find center tile
+                int centerRow = boardGrid.GetLength(0) / 2;
+                int centerCol = boardGrid.GetLength(1) / 2;
+                BoardTile centerTile = boardGrid[centerRow, centerCol];
+
+                // Ensure the center is empty
+                if (centerTile.PieceOnTile != null)
+                {
+                    Console.WriteLine("Center tile is occupied!");
+                    return;
+                }
+
+                piecePanel.Parent = this;
+                // Move the piece to the center
+                MovePieceToTile(selectedPieceManual, centerTile);
+            }
+        }
+
+        private void PlacePieceInCenter(ChessPiece newPiece)
+        {
+            if (boardGrid == null) return;
+
+            int centerRow = boardGrid.GetLength(0) / 2;
+            int centerCol = boardGrid.GetLength(1) / 2;
+
+            BoardTile centerTile = boardGrid[centerRow, centerCol];
+
+            if (centerTile == null)
+            {
+                Console.WriteLine("Error: Center tile not found.");
+                return;
+            }
+
+            // Check if a piece is already in the center
+            if (centerTile.PieceOnTile != null)
+            {
+                ChessPiece oldPiece = centerTile.PieceOnTile;
+
+                // Remove old piece from board list and move it back to display list
+                boardPiecesManual.Remove(oldPiece);
+                displayPiecesManual.Add(oldPiece);
+
+                // Move the old piece back to the display UI
+                oldPiece.PiecePanel.Location = GetNextAvailableDisplaySlot();
+                gbxPiecesHolderManual.Controls.Add(oldPiece.PiecePanel);
+                oldPiece.PiecePanel.BringToFront();
+                Console.WriteLine($"Moved {oldPiece.PieceName} back to display.");
+            }
+
+            // Place new piece in center
+            MovePieceToTile(newPiece, centerTile);
+            boardPiecesManual.Add(newPiece);
+            displayPiecesManual.Remove(newPiece);
+
+            Console.WriteLine($"Placed {newPiece.PieceName} in center ({centerRow}, {centerCol}).");
+        }
+
+        private Point GetNextAvailableDisplaySlot()
+        {
+            int x = 5, y = 18;
+            int spacingX = 85, spacingY = 85;
+            int columns = 2;
+            int count = displayPiecesManual.Count;
+
+            x += (count % columns) * spacingX;
+            y += (count / columns) * spacingY;
+
+            return new Point(x, y);
+        }
+
+        private void MovePieceToTile(ChessPiece piece, BoardTile tile)
+        {
+            // Remove this piece from any tile that has it
+            foreach (var t in boardGrid)
+            {
+                if (t.PieceOnTile == piece)
+                {
+                    t.PieceOnTile = null;
+                }
+            }
+
+            // Now move the piece to the new tile
+            piece.PiecePanel.Location = tile.TilePanel.Location;
+            piece.Row = tile.Row;
+            piece.Col = tile.Col;
+
+            // Set the new tile to hold the piece
+            tile.PieceOnTile = piece;
+            
+           displayPiecesManual.Remove(piece);
+           boardPiecesManual.Add(piece); 
         }
 
     }

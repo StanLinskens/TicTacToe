@@ -22,8 +22,6 @@ namespace TicTacChessSlin
 
         private BoardTile[,] boardGrid; // 2D array to store tiles
 
-        private List<ChessPiece> chessPieces = new List<ChessPiece>(); // List to store pieces
-
         private List<ChessPiece> displayPieces = new List<ChessPiece>(); // Pieces in the UI display
         private List<ChessPiece> boardPieces = new List<ChessPiece>(); // Pieces on the board
 
@@ -765,6 +763,39 @@ namespace TicTacChessSlin
             return true;
         }
 
+        private void btnOpenManual_Click(object sender, EventArgs e)
+        {
+            // Check if the Manual form is already open
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is manual)
+                {
+                    form.Activate();
+                    return;
+                }
+            }
+
+            // Open the Manual form if not already open
+            manual manualForm = new manual();
+            manualForm.Show();
+        }
+
+        private void btnOpenBasic_Click(object sender, EventArgs e)
+        {
+            // Check if the Basic form is already open
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is basic)
+                {
+                    form.Activate();
+                    return;
+                }
+            }
+
+            // Open the Basic form if not already open
+            basic basicForm = new basic();
+            basicForm.Show();
+        }
 
     }
 }

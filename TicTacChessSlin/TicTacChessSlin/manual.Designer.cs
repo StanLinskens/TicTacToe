@@ -30,54 +30,53 @@
         {
             this.rbFalse = new System.Windows.Forms.RadioButton();
             this.rbTrue = new System.Windows.Forms.RadioButton();
-            this.gbxPiecesHolder = new System.Windows.Forms.GroupBox();
+            this.gbxPiecesHolderManual = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
             // 
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(996, 66);
-            this.rbFalse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbFalse.Location = new System.Drawing.Point(816, 13);
             this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(73, 24);
+            this.rbFalse.Size = new System.Drawing.Size(52, 17);
             this.rbFalse.TabIndex = 4;
             this.rbFalse.TabStop = true;
             this.rbFalse.Tag = "false";
             this.rbFalse.Text = "Black";
             this.rbFalse.UseVisualStyleBackColor = true;
+            this.rbFalse.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(816, 66);
-            this.rbTrue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbTrue.Location = new System.Drawing.Point(696, 13);
             this.rbTrue.Name = "rbTrue";
-            this.rbTrue.Size = new System.Drawing.Size(75, 24);
+            this.rbTrue.Size = new System.Drawing.Size(53, 17);
             this.rbTrue.TabIndex = 2;
             this.rbTrue.TabStop = true;
             this.rbTrue.Tag = "true";
             this.rbTrue.Text = "White";
             this.rbTrue.UseVisualStyleBackColor = true;
+            this.rbTrue.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
-            // gbxPiecesHolder
+            // gbxPiecesHolderManual
             // 
-            this.gbxPiecesHolder.Location = new System.Drawing.Point(816, 101);
-            this.gbxPiecesHolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxPiecesHolder.Name = "gbxPiecesHolder";
-            this.gbxPiecesHolder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxPiecesHolder.Size = new System.Drawing.Size(258, 821);
-            this.gbxPiecesHolder.TabIndex = 3;
-            this.gbxPiecesHolder.TabStop = false;
-            this.gbxPiecesHolder.Text = "Pick Your Pieces";
+            this.gbxPiecesHolderManual.Location = new System.Drawing.Point(696, 36);
+            this.gbxPiecesHolderManual.Name = "gbxPiecesHolderManual";
+            this.gbxPiecesHolderManual.Size = new System.Drawing.Size(172, 534);
+            this.gbxPiecesHolderManual.TabIndex = 3;
+            this.gbxPiecesHolderManual.TabStop = false;
+            this.gbxPiecesHolderManual.Text = "Pick Your Pieces";
             // 
             // manual
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1098, 972);
+            this.ClientSize = new System.Drawing.Size(899, 707);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
-            this.Controls.Add(this.gbxPiecesHolder);
+            this.Controls.Add(this.gbxPiecesHolderManual);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "manual";
             this.Text = "manual";
             this.Load += new System.EventHandler(this.manual_Load);
@@ -90,6 +89,6 @@
 
         private System.Windows.Forms.RadioButton rbFalse;
         private System.Windows.Forms.RadioButton rbTrue;
-        private System.Windows.Forms.GroupBox gbxPiecesHolder;
+        private System.Windows.Forms.GroupBox gbxPiecesHolderManual;
     }
 }

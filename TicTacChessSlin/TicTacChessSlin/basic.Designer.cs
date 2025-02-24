@@ -1,6 +1,6 @@
 ﻿namespace TicTacChessSlin
 {
-    partial class Form1
+    partial class basic
     {
         /// <summary>
         /// Required designer variable.
@@ -28,21 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.gbxPiecesHolder = new System.Windows.Forms.GroupBox();
             this.rbTrue = new System.Windows.Forms.RadioButton();
             this.rbFalse = new System.Windows.Forms.RadioButton();
             this.btnGameStatus = new System.Windows.Forms.Button();
             this.lblTeamsTurn = new System.Windows.Forms.Label();
-            this.gbxPiecesHolder = new System.Windows.Forms.GroupBox();
-            this.btnOpenManual = new System.Windows.Forms.Button();
-            this.btnOpenBasic = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // gbxPiecesHolder
+            // 
+            this.gbxPiecesHolder.Location = new System.Drawing.Point(526, 172);
+            this.gbxPiecesHolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxPiecesHolder.Name = "gbxPiecesHolder";
+            this.gbxPiecesHolder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxPiecesHolder.Size = new System.Drawing.Size(258, 446);
+            this.gbxPiecesHolder.TabIndex = 0;
+            this.gbxPiecesHolder.TabStop = false;
+            this.gbxPiecesHolder.Text = "Pick Your Pieces";
             // 
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(648, 15);
+            this.rbTrue.Location = new System.Drawing.Point(526, 137);
+            this.rbTrue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rbTrue.Name = "rbTrue";
-            this.rbTrue.Size = new System.Drawing.Size(53, 17);
+            this.rbTrue.Size = new System.Drawing.Size(75, 24);
             this.rbTrue.TabIndex = 0;
             this.rbTrue.TabStop = true;
             this.rbTrue.Tag = "true";
@@ -53,9 +63,10 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(716, 15);
+            this.rbFalse.Location = new System.Drawing.Point(706, 137);
+            this.rbFalse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(52, 17);
+            this.rbFalse.Size = new System.Drawing.Size(73, 24);
             this.rbFalse.TabIndex = 1;
             this.rbFalse.TabStop = true;
             this.rbFalse.Tag = "false";
@@ -65,9 +76,10 @@
             // 
             // btnGameStatus
             // 
-            this.btnGameStatus.Location = new System.Drawing.Point(25, 9);
+            this.btnGameStatus.Location = new System.Drawing.Point(526, 20);
+            this.btnGameStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnGameStatus.Name = "btnGameStatus";
-            this.btnGameStatus.Size = new System.Drawing.Size(75, 23);
+            this.btnGameStatus.Size = new System.Drawing.Size(112, 35);
             this.btnGameStatus.TabIndex = 2;
             this.btnGameStatus.Text = "Start";
             this.btnGameStatus.UseVisualStyleBackColor = true;
@@ -76,53 +88,22 @@
             // lblTeamsTurn
             // 
             this.lblTeamsTurn.AutoSize = true;
-            this.lblTeamsTurn.Location = new System.Drawing.Point(504, 589);
-            this.lblTeamsTurn.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTeamsTurn.Location = new System.Drawing.Point(526, 637);
             this.lblTeamsTurn.Name = "lblTeamsTurn";
-            this.lblTeamsTurn.Size = new System.Drawing.Size(0, 13);
+            this.lblTeamsTurn.Size = new System.Drawing.Size(0, 20);
             this.lblTeamsTurn.TabIndex = 3;
-            // 
-            // gbxPiecesHolder
-            // 
-            this.gbxPiecesHolder.Location = new System.Drawing.Point(506, 38);
-            this.gbxPiecesHolder.Name = "gbxPiecesHolder";
-            this.gbxPiecesHolder.Size = new System.Drawing.Size(260, 364);
-            this.gbxPiecesHolder.TabIndex = 0;
-            this.gbxPiecesHolder.TabStop = false;
-            this.gbxPiecesHolder.Text = "Pick Your Pieces";
-            // 
-            // btnOpenManual
-            // 
-            this.btnOpenManual.Location = new System.Drawing.Point(306, 9);
-            this.btnOpenManual.Name = "btnOpenManual";
-            this.btnOpenManual.Size = new System.Drawing.Size(80, 23);
-            this.btnOpenManual.TabIndex = 4;
-            this.btnOpenManual.Text = "Open Manual";
-            this.btnOpenManual.UseVisualStyleBackColor = true;
-            this.btnOpenManual.Click += new System.EventHandler(this.btnOpenManual_Click);
-            // 
-            // btnOpenBasic
-            // 
-            this.btnOpenBasic.Location = new System.Drawing.Point(401, 9);
-            this.btnOpenBasic.Name = "btnOpenBasic";
-            this.btnOpenBasic.Size = new System.Drawing.Size(80, 23);
-            this.btnOpenBasic.TabIndex = 5;
-            this.btnOpenBasic.Text = "Open Basic";
-            this.btnOpenBasic.UseVisualStyleBackColor = true;
-            this.btnOpenBasic.Click += new System.EventHandler(this.btnOpenBasic_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 548);
-            this.Controls.Add(this.btnOpenBasic);
-            this.Controls.Add(this.btnOpenManual);
+            this.ClientSize = new System.Drawing.Size(843, 714);
             this.Controls.Add(this.lblTeamsTurn);
             this.Controls.Add(this.btnGameStatus);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
             this.Controls.Add(this.gbxPiecesHolder);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -138,8 +119,6 @@
         private System.Windows.Forms.RadioButton rbFalse;
         private System.Windows.Forms.Button btnGameStatus;
         private System.Windows.Forms.Label lblTeamsTurn;
-        private System.Windows.Forms.Button btnOpenManual;
-        private System.Windows.Forms.Button btnOpenBasic;
     }
 }
 
