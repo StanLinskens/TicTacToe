@@ -9,7 +9,7 @@ namespace TicTacChessSlin
     public partial class Form1 : Form
     {
         int BoardStartX = 25;
-        int BoardStartY = 50;
+        int BoardStartY = 45;
         string grid = "5x5";
         int gap = 14;
 
@@ -414,7 +414,7 @@ namespace TicTacChessSlin
             int y = 18;
             int spacingX = 85;
             int spacingY = 85;
-            int columns = 2;
+            int columns = 3;
 
             int count = 0;
 
@@ -692,16 +692,16 @@ namespace TicTacChessSlin
                 if (isWhiteTurn)
                 {
                     if (piece.IsWhite)
-                        piece.PiecePanel.BackColor = Color.Blue;  // Blue for white team
+                        piece.PiecePanel.BackColor = Color.Blue;
                     else
-                        piece.PiecePanel.BackColor = Color.White;  // White for black team
+                        piece.PiecePanel.BackColor = Color.White;
                 }
                 else
                 {
                     if (piece.IsWhite)
-                        piece.PiecePanel.BackColor = Color.White;  // White for white team
+                        piece.PiecePanel.BackColor = Color.White;
                     else
-                        piece.PiecePanel.BackColor = Color.Red;  // Red for black team
+                        piece.PiecePanel.BackColor = Color.Red;
                 }
             }
         }
@@ -732,7 +732,7 @@ namespace TicTacChessSlin
             // Check diagonals
             for (int i = 0; i < rows - 2; i++) // Ensure we don't go out of bounds
             {
-                for (int j = 0; j < cols - 2; j++) // Ensure we don't go out of bounds
+                for (int j = 0; j < cols - 2; j++)
                 {
                     if (CheckLine(boardGrid[i, j], boardGrid[i + 1, j + 1], boardGrid[i + 2, j + 2])) return;
                     if (CheckLine(boardGrid[i + 2, j], boardGrid[i + 1, j + 1], boardGrid[i, j + 2])) return;

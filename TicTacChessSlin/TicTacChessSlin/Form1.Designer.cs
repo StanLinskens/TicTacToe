@@ -38,10 +38,9 @@
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(760, 30);
-            this.rbTrue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbTrue.Location = new System.Drawing.Point(648, 15);
             this.rbTrue.Name = "rbTrue";
-            this.rbTrue.Size = new System.Drawing.Size(75, 24);
+            this.rbTrue.Size = new System.Drawing.Size(53, 17);
             this.rbTrue.TabIndex = 0;
             this.rbTrue.TabStop = true;
             this.rbTrue.Tag = "true";
@@ -52,10 +51,9 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(940, 30);
-            this.rbFalse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbFalse.Location = new System.Drawing.Point(716, 15);
             this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(73, 24);
+            this.rbFalse.Size = new System.Drawing.Size(52, 17);
             this.rbFalse.TabIndex = 1;
             this.rbFalse.TabStop = true;
             this.rbFalse.Tag = "false";
@@ -65,10 +63,9 @@
             // 
             // btnGameStatus
             // 
-            this.btnGameStatus.Location = new System.Drawing.Point(38, 14);
-            this.btnGameStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnGameStatus.Location = new System.Drawing.Point(25, 9);
             this.btnGameStatus.Name = "btnGameStatus";
-            this.btnGameStatus.Size = new System.Drawing.Size(112, 35);
+            this.btnGameStatus.Size = new System.Drawing.Size(75, 23);
             this.btnGameStatus.TabIndex = 2;
             this.btnGameStatus.Text = "Start";
             this.btnGameStatus.UseVisualStyleBackColor = true;
@@ -77,33 +74,31 @@
             // lblTeamsTurn
             // 
             this.lblTeamsTurn.AutoSize = true;
-            this.lblTeamsTurn.Location = new System.Drawing.Point(756, 906);
+            this.lblTeamsTurn.Location = new System.Drawing.Point(504, 589);
+            this.lblTeamsTurn.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTeamsTurn.Name = "lblTeamsTurn";
-            this.lblTeamsTurn.Size = new System.Drawing.Size(0, 20);
+            this.lblTeamsTurn.Size = new System.Drawing.Size(0, 13);
             this.lblTeamsTurn.TabIndex = 3;
             // 
             // gbxPiecesHolder
             // 
-            this.gbxPiecesHolder.Location = new System.Drawing.Point(760, 65);
-            this.gbxPiecesHolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbxPiecesHolder.Location = new System.Drawing.Point(506, 38);
             this.gbxPiecesHolder.Name = "gbxPiecesHolder";
-            this.gbxPiecesHolder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbxPiecesHolder.Size = new System.Drawing.Size(258, 821);
+            this.gbxPiecesHolder.Size = new System.Drawing.Size(260, 364);
             this.gbxPiecesHolder.TabIndex = 0;
             this.gbxPiecesHolder.TabStop = false;
             this.gbxPiecesHolder.Text = "Pick Your Pieces";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 960);
+            this.ClientSize = new System.Drawing.Size(778, 548);
             this.Controls.Add(this.lblTeamsTurn);
             this.Controls.Add(this.btnGameStatus);
             this.Controls.Add(this.rbFalse);
             this.Controls.Add(this.rbTrue);
             this.Controls.Add(this.gbxPiecesHolder);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
