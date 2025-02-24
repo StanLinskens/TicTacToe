@@ -234,28 +234,28 @@ namespace TicTacChessSlin
                 },
                 {
                     "Ice_Wizard", (Properties.Resources.ice_wizard, true, new List<MoveInstruction>
-                        {
-                            new MoveInstruction(-1, -1, false),
-                            new MoveInstruction(-1, 0, false),
-                            new MoveInstruction(-1, 1, false),
-                            new MoveInstruction(0, -1, false),
-                            new MoveInstruction(0, 1, false),
-                            new MoveInstruction(1, -1, false),
-                            new MoveInstruction(1, 0, false),
-                            new MoveInstruction(1, 1, false)
+                        {                            
+                            new MoveInstruction(-1, -1, false), 
+                            new MoveInstruction(-1, 1, false),  
+                            new MoveInstruction(1, -1, false),   
+                            new MoveInstruction(1, 1, false),                
+                            new MoveInstruction(-2, 0, false), 
+                            new MoveInstruction(2, 0, false),  
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(0, 2, false)
                         })
                 },
                 {
                     "Electro_Wizard", (Properties.Resources.electro_wizard, false, new List<MoveInstruction>
                         {
                             new MoveInstruction(-1, -1, false),
-                            new MoveInstruction(-1, 0, false),
                             new MoveInstruction(-1, 1, false),
-                            new MoveInstruction(0, -1, false),
-                            new MoveInstruction(0, 1, false),
                             new MoveInstruction(1, -1, false),
-                            new MoveInstruction(1, 0, false),
-                            new MoveInstruction(1, 1, false)
+                            new MoveInstruction(1, 1, false),
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(0, 2, false)
                         })
                 },
                 {

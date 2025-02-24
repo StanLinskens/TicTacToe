@@ -392,7 +392,7 @@ namespace TicTacChessSlin
                 ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
                 displayPieces.Add(newPiece);
 
-                piecePanel.MouseClick += Piece_MouseClick;
+                //piecePanel.MouseClick += Piece_MouseClick;
 
 
                 PieceLibrary.AddOrUpdatePiece(piece.Key, newPiece);
