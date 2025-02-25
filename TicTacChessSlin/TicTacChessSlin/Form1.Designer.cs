@@ -41,9 +41,9 @@
             // rbTrue
             // 
             this.rbTrue.AutoSize = true;
-            this.rbTrue.Location = new System.Drawing.Point(648, 15);
+            this.rbTrue.Location = new System.Drawing.Point(714, 15);
             this.rbTrue.Name = "rbTrue";
-            this.rbTrue.Size = new System.Drawing.Size(60, 20);
+            this.rbTrue.Size = new System.Drawing.Size(53, 17);
             this.rbTrue.TabIndex = 0;
             this.rbTrue.TabStop = true;
             this.rbTrue.Tag = "true";
@@ -54,9 +54,9 @@
             // rbFalse
             // 
             this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(716, 15);
+            this.rbFalse.Location = new System.Drawing.Point(782, 15);
             this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(59, 20);
+            this.rbFalse.Size = new System.Drawing.Size(52, 17);
             this.rbFalse.TabIndex = 1;
             this.rbFalse.TabStop = true;
             this.rbFalse.Tag = "false";
@@ -88,7 +88,7 @@
             // 
             this.gbxPiecesHolder.Location = new System.Drawing.Point(506, 38);
             this.gbxPiecesHolder.Name = "gbxPiecesHolder";
-            this.gbxPiecesHolder.Size = new System.Drawing.Size(260, 364);
+            this.gbxPiecesHolder.Size = new System.Drawing.Size(345, 364);
             this.gbxPiecesHolder.TabIndex = 0;
             this.gbxPiecesHolder.TabStop = false;
             this.gbxPiecesHolder.Text = "Pick Your Pieces";
@@ -117,7 +117,7 @@
             // 
             this.gbxSpellsHolder.Location = new System.Drawing.Point(506, 408);
             this.gbxSpellsHolder.Name = "gbxSpellsHolder";
-            this.gbxSpellsHolder.Size = new System.Drawing.Size(260, 195);
+            this.gbxSpellsHolder.Size = new System.Drawing.Size(345, 111);
             this.gbxSpellsHolder.TabIndex = 6;
             this.gbxSpellsHolder.TabStop = false;
             this.gbxSpellsHolder.Text = "Pick Your Spell";
@@ -126,7 +126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 624);
+            this.ClientSize = new System.Drawing.Size(866, 534);
             this.Controls.Add(this.gbxSpellsHolder);
             this.Controls.Add(this.btnOpenBasic);
             this.Controls.Add(this.btnOpenManual);

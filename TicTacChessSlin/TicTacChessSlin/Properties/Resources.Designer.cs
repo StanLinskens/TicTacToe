@@ -83,9 +83,9 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap chef {
+        internal static System.Drawing.Bitmap cannon_cart {
             get {
-                object obj = ResourceManager.GetObject("chef", resourceCulture);
+                object obj = ResourceManager.GetObject("cannon_cart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap circle {
+        internal static System.Drawing.Bitmap chef {
             get {
-                object obj = ResourceManager.GetObject("circle", resourceCulture);
+                object obj = ResourceManager.GetObject("chef", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fireball1 {
+        internal static System.Drawing.Bitmap fisherman {
             get {
-                object obj = ResourceManager.GetObject("fireball1", resourceCulture);
+                object obj = ResourceManager.GetObject("fisherman", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,39 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap freeze1 {
+        internal static System.Drawing.Bitmap furnace {
             get {
-                object obj = ResourceManager.GetObject("freeze1", resourceCulture);
+                object obj = ResourceManager.GetObject("furnace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap goblin_hut {
+            get {
+                object obj = ResourceManager.GetObject("goblin_hut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap goblins {
+            get {
+                object obj = ResourceManager.GetObject("goblins", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap goblinstein {
+            get {
+                object obj = ResourceManager.GetObject("goblinstein", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,6 +313,16 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap little_prince {
+            get {
+                object obj = ResourceManager.GetObject("little_prince", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mega_knight {
             get {
                 object obj = ResourceManager.GetObject("mega_knight", resourceCulture);
@@ -323,16 +363,6 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap poison1 {
-            get {
-                object obj = ResourceManager.GetObject("poison1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap prince {
             get {
                 object obj = ResourceManager.GetObject("prince", resourceCulture);
@@ -346,6 +376,16 @@ namespace TicTacChessSlin.Properties {
         internal static System.Drawing.Bitmap ram_rider {
             get {
                 object obj = ResourceManager.GetObject("ram_rider", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap skeleton {
+            get {
+                object obj = ResourceManager.GetObject("skeleton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

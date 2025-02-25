@@ -121,9 +121,6 @@
   <data name="electro-dragon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\electro-dragon.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fireball1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fireball1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="baby-dragon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\baby-dragon.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -138,9 +135,6 @@
   </data>
   <data name="wizard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wizard.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\circle.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ram_rider" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ram_rider.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -162,12 +156,6 @@
   </data>
   <data name="sparky" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sparky.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="freeze1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\freeze1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="poison1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\poison1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fireball" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fireball.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -216,6 +204,30 @@
   </data>
   <data name="hog_rider" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hog_rider.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cannon_cart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cannon_cart.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fisherman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fisherman.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="furnace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\furnace.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goblins" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\goblins.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goblinstein" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\goblinstein.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goblin_hut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\goblin_hut.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="little_prince" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\little-prince.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="skeleton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\skeleton.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="the_log" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\the_log.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

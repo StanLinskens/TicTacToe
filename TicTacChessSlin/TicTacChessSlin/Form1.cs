@@ -9,7 +9,7 @@ namespace TicTacChessSlin
     public partial class Form1 : Form
     {
         int BoardStartX = 25;
-        int BoardStartY = 90;
+        int BoardStartY = 50;
         string grid = "5x5";
         int gap = 14;
 
@@ -361,6 +361,19 @@ namespace TicTacChessSlin
                         })
                 },
                 {
+                    "Sparky", (Properties.Resources.sparky, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(0, -3, true),
+                            new MoveInstruction(0, 3, true),
+                            new MoveInstruction(-3, 0, true),
+                            new MoveInstruction(3, 0, true)
+                        })
+                },
+                {
                     "Mega_Knight", (Properties.Resources.mega_knight, true, new List<MoveInstruction>
                         {
                             new MoveInstruction(-3, 0, false),
@@ -373,19 +386,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(2, 1, false)
                         })
                 },
-                {
-                    "Sparky", (Properties.Resources.sparky, false, new List<MoveInstruction>
-                        {
-                            new MoveInstruction(-1, 0, false),
-                            new MoveInstruction(1, 0, false),
-                            new MoveInstruction(0, -1, false),
-                            new MoveInstruction(0, 1, false),
-                            new MoveInstruction(0, -4, true),
-                            new MoveInstruction(0, 4, true),
-                            new MoveInstruction(-4, 0, true),
-                            new MoveInstruction(4, 0, true)
-                        })
-                }
+
             };
 
             foreach (var piece in pieces)
@@ -420,7 +421,7 @@ namespace TicTacChessSlin
             int y = 18;
             int spacingX = 85;
             int spacingY = 85;
-            int columns = 3;
+            int columns = 4;
 
             int count = 0;
 
@@ -856,7 +857,7 @@ namespace TicTacChessSlin
             int y = 18;
             int spacingX = 85;
             int spacingY = 85;
-            int columns = 3;
+            int columns = 4;
 
             int count = 0;
 
@@ -938,8 +939,6 @@ namespace TicTacChessSlin
 
             selectedSpell = null;
         }
-
-
 
     }
 }

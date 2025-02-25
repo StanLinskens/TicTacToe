@@ -38,7 +38,7 @@
             this.rbFalse.AutoSize = true;
             this.rbFalse.Location = new System.Drawing.Point(1010, 5);
             this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(59, 20);
+            this.rbFalse.Size = new System.Drawing.Size(52, 17);
             this.rbFalse.TabIndex = 4;
             this.rbFalse.TabStop = true;
             this.rbFalse.Tag = "false";
@@ -51,7 +51,7 @@
             this.rbTrue.AutoSize = true;
             this.rbTrue.Location = new System.Drawing.Point(890, 5);
             this.rbTrue.Name = "rbTrue";
-            this.rbTrue.Size = new System.Drawing.Size(60, 20);
+            this.rbTrue.Size = new System.Drawing.Size(53, 17);
             this.rbTrue.TabIndex = 2;
             this.rbTrue.TabStop = true;
             this.rbTrue.Tag = "true";
@@ -63,7 +63,7 @@
             // 
             this.gbxPiecesHolderManual.Location = new System.Drawing.Point(890, 28);
             this.gbxPiecesHolderManual.Name = "gbxPiecesHolderManual";
-            this.gbxPiecesHolderManual.Size = new System.Drawing.Size(172, 534);
+            this.gbxPiecesHolderManual.Size = new System.Drawing.Size(172, 860);
             this.gbxPiecesHolderManual.TabIndex = 3;
             this.gbxPiecesHolderManual.TabStop = false;
             this.gbxPiecesHolderManual.Text = "Pick Your Pieces";

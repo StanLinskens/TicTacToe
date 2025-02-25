@@ -231,7 +231,31 @@
     <None Include="Resources\poison1.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\cannon_cart.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fisherman.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\furnace.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\goblins.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\goblinstein.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\little-prince.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skeleton.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\the_log.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\goblin_hut.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
