@@ -448,20 +448,70 @@ namespace TicTacChessSlin
                 {
                     "Furnace", (Properties.Resources.furnace, true, new List<MoveInstruction>
                         {
-                            new MoveInstruction(0, 1, false),
-                            new MoveInstruction(0, 2, false),
-                            new MoveInstruction(0, 3, false),
+                            new MoveInstruction(0, 1, true),
                             new MoveInstruction(-1, 3, false),
-                            new MoveInstruction(1, 3, false)
+                            new MoveInstruction(1, 3, false),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(-1, -3, false),
+                            new MoveInstruction(1, -3, false),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(-3, -1, false),
+                            new MoveInstruction(-3, 1, false),
+                            new MoveInstruction(1, 0, true),
+                            new MoveInstruction(3, -1, false),
+                            new MoveInstruction(3, 1, false)
                         })
                 },
                 {
                     "Goblin_Hut", (Properties.Resources.goblin_hut, false, new List<MoveInstruction>
                         {
-                            new MoveInstruction(-1, 1, false),
-                            new MoveInstruction(1, -1, false),
-                            new MoveInstruction(-1, -1, false),
-                            new MoveInstruction(1, 1, false)
+                            new MoveInstruction(0, 1, true),
+                            new MoveInstruction(-1, 3, false),
+                            new MoveInstruction(1, 3, false),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(-1, -3, false),
+                            new MoveInstruction(1, -3, false),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(-3, -1, false),
+                            new MoveInstruction(-3, 1, false),
+                            new MoveInstruction(1, 0, true),
+                            new MoveInstruction(3, -1, false),
+                            new MoveInstruction(3, 1, false)
+
+                        })
+                },
+                {
+                    "Little_Prince", (Properties.Resources.little_prince, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(-1, 2, true),
+                            new MoveInstruction(-2, 1, true),
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, -2, true),
+                            new MoveInstruction(-2, -1, true),
+                            new MoveInstruction(1, 1, true),
+                            new MoveInstruction(1, 2, true),
+                            new MoveInstruction(2, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, -2, true),
+                            new MoveInstruction(2, -1, true),
+                        })
+                },
+                {
+                    "GoblinStein", (Properties.Resources.goblinstein, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(-1, 2, true),
+                            new MoveInstruction(-2, 1, true),
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, -2, true),
+                            new MoveInstruction(-2, -1, true),
+                            new MoveInstruction(1, 1, true),
+                            new MoveInstruction(1, 2, true),
+                            new MoveInstruction(2, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, -2, true),
+                            new MoveInstruction(2, -1, true),
                         })
                 },
 

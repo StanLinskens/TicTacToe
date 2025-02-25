@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace TicTacChessSlin
 {
@@ -32,6 +33,11 @@ namespace TicTacChessSlin
         public static List<Spell> GetAllSpells()
         {
             return spellCollection.Values.ToList();
+        }
+
+        public static Spell GetSpellByPanel(Panel panel)
+        {
+            return spellCollection.Values.FirstOrDefault(piece => piece.SpellPanel == panel);
         }
     }
 }

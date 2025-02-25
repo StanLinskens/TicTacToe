@@ -97,6 +97,7 @@ namespace TicTacChessSlin
                     if (isTargetTile)
                     {
                         tileImage = Properties.Resources.button; 
+
                         //newPanel.BackColor = Color.Gold;
                     }
 
@@ -240,13 +241,13 @@ namespace TicTacChessSlin
                 },
                 {
                     "Ice_Wizard", (Properties.Resources.ice_wizard, true, new List<MoveInstruction>
-                        {                            
-                            new MoveInstruction(-1, -1, false), 
-                            new MoveInstruction(-1, 1, false),  
-                            new MoveInstruction(1, -1, false),   
-                            new MoveInstruction(1, 1, false),                
-                            new MoveInstruction(-2, 0, false), 
-                            new MoveInstruction(2, 0, false),  
+                        {
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(1, 1, false),
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(2, 0, false),
                             new MoveInstruction(0, -2, false),
                             new MoveInstruction(0, 2, false)
                         })
@@ -361,6 +362,23 @@ namespace TicTacChessSlin
                         })
                 },
                 {
+                    "Cannon_Cart", (Properties.Resources.cannon_cart, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 0, false),
+                            new MoveInstruction(1, 0, false),
+                            new MoveInstruction(0, -1, false),
+                            new MoveInstruction(0, 1, false),
+                            new MoveInstruction(0, -3, true),
+                            new MoveInstruction(0, 3, true),
+                            new MoveInstruction(-3, 0, true),
+                            new MoveInstruction(3, 0, true),
+                            new MoveInstruction(2, 2, true),
+                            new MoveInstruction(-2, -2, true),
+                            new MoveInstruction(2, -2, true),
+                            new MoveInstruction(-2, 2, true)
+                        })
+                },
+                {
                     "Sparky", (Properties.Resources.sparky, false, new List<MoveInstruction>
                         {
                             new MoveInstruction(-1, 0, false),
@@ -370,20 +388,140 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, -3, true),
                             new MoveInstruction(0, 3, true),
                             new MoveInstruction(-3, 0, true),
-                            new MoveInstruction(3, 0, true)
+                            new MoveInstruction(3, 0, true),
+                            new MoveInstruction(2, 2, true),
+                            new MoveInstruction(-2, -2, true),
+                            new MoveInstruction(2, -2, true),
+                            new MoveInstruction(-2, 2, true)
                         })
                 },
                 {
                     "Mega_Knight", (Properties.Resources.mega_knight, true, new List<MoveInstruction>
                         {
-                            new MoveInstruction(-3, 0, false),
-                            new MoveInstruction(3, 0, false),
-                            new MoveInstruction(0, -3, false),
-                            new MoveInstruction(0, 3, false),
-                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(1, 1, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(1, 2, false),
                             new MoveInstruction(-2, 1, false),
                             new MoveInstruction(2, -1, false),
-                            new MoveInstruction(2, 1, false)
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, 2, false)
+                        })
+                },
+                {
+                    "Fisherman", (Properties.Resources.fisherman, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(1, 1, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(1, 2, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-2, 0, false),
+                            new MoveInstruction(0, -2, false),
+                            new MoveInstruction(2, 0, false),
+                            new MoveInstruction(0, 2, false)
+                        })
+                },
+                {
+                    "Skeleton", (Properties.Resources.skeleton, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(1, 1, false)
+                        })
+                },
+                {
+                    "Goblin", (Properties.Resources.goblins, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, false),
+                            new MoveInstruction(1, -1, false),
+                            new MoveInstruction(-1, -1, false),
+                            new MoveInstruction(1, 1, false)
+                        })
+                },
+                {
+                    "Furnace", (Properties.Resources.furnace, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, 1, true),
+                            new MoveInstruction(-1, 3, false),
+                            new MoveInstruction(1, 3, false),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(-1, -3, false),
+                            new MoveInstruction(1, -3, false),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(-3, -1, false),
+                            new MoveInstruction(-3, 1, false),
+                            new MoveInstruction(1, 0, true),
+                            new MoveInstruction(3, -1, false),
+                            new MoveInstruction(3, 1, false)
+                        })
+                },
+                {
+                    "Goblin_Hut", (Properties.Resources.goblin_hut, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(0, 1, true),
+                            new MoveInstruction(-1, 3, false),
+                            new MoveInstruction(1, 3, false),
+                            new MoveInstruction(0, -1, true),
+                            new MoveInstruction(-1, -3, false),
+                            new MoveInstruction(1, -3, false),
+                            new MoveInstruction(-1, 0, true),
+                            new MoveInstruction(-3, -1, false),
+                            new MoveInstruction(-3, 1, false),
+                            new MoveInstruction(1, 0, true),
+                            new MoveInstruction(3, -1, false),
+                            new MoveInstruction(3, 1, false)
+
+                        })
+                },
+                {
+                    "Little_Prince", (Properties.Resources.little_prince, true, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(-1, 2, true),
+                            new MoveInstruction(-2, 1, true),
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, -2, true),
+                            new MoveInstruction(-2, -1, true),
+                            new MoveInstruction(1, 1, true),
+                            new MoveInstruction(1, 2, true),
+                            new MoveInstruction(2, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, -2, true),
+                            new MoveInstruction(2, -1, true),
+                        })
+                },
+                {
+                    "GoblinStein", (Properties.Resources.goblinstein, false, new List<MoveInstruction>
+                        {
+                            new MoveInstruction(-1, 1, true),
+                            new MoveInstruction(-1, 2, true),
+                            new MoveInstruction(-2, 1, true),
+                            new MoveInstruction(-1, -1, true),
+                            new MoveInstruction(-1, -2, true),
+                            new MoveInstruction(-2, -1, true),
+                            new MoveInstruction(1, 1, true),
+                            new MoveInstruction(1, 2, true),
+                            new MoveInstruction(2, 1, true),
+                            new MoveInstruction(1, -1, true),
+                            new MoveInstruction(1, -2, true),
+                            new MoveInstruction(2, -1, true),
                         })
                 },
 
@@ -889,20 +1027,26 @@ namespace TicTacChessSlin
         {
             if (sender is Panel spellPanel)
             {
-                selectedSpell = displaySpells.FirstOrDefault(s => s.SpellPanel == spellPanel);
+                selectedSpell = SpellLibrary.GetSpellByPanel(spellPanel);
                 if (selectedSpell == null) return;
 
-                isDraggingSpell = true;
+                isDragging = true;
                 spellOriginalPosition = spellPanel.Location;
-                spellPanel.Parent = this; // Move spell out of `gbxSpellsHolder` so it's visible
+                spellPanel.Parent = this;
                 spellPanel.BringToFront();
+
+                ResetAllTileColors(); // Reset previous highlights
+
+                // Highlight valid tiles for this spell
+                //HighlightValidTiles(selectedSpell);
             }
         }
 
         private void Spell_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDraggingSpell && selectedSpell != null)
+            if (isDragging && selectedSpell != null)
             {
+                // Move piece with the mouse
                 selectedSpell.SpellPanel.Location = new Point(
                     selectedSpell.SpellPanel.Location.X + e.X - selectedSpell.SpellPanel.Width / 2,
                     selectedSpell.SpellPanel.Location.Y + e.Y - selectedSpell.SpellPanel.Height / 2
@@ -912,32 +1056,64 @@ namespace TicTacChessSlin
 
         private void Spell_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!isDraggingSpell || selectedSpell == null) return;
-            isDraggingSpell = false;
-
-            // Check if spell was dropped on the board
-            Point mousePosition = this.PointToClient(Cursor.Position);
-            bool spellUsed = false;
-
-            foreach (var tile in boardGrid)
+            if (selectedSpell != null)
             {
-                Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
-                if (tileBounds.Contains(mousePosition))
+                // Get the tile at drop position
+                Point mousePosition = PointToClient(Cursor.Position);
+                BoardTile targetTile = GetTileAt(mousePosition);
+                ChessPiece targetPiece = targetTile?.PieceOnTile;
+
+                if (targetTile != null)
                 {
-                    //ApplySpellEffect(selectedSpell, tile);
-                    spellUsed = true;
-                    break;
+                    ApplySpellEffect(selectedSpell, targetTile, targetPiece);
                 }
-            }
 
-            // If spell wasn't used, return it to the original position
-            if (!spellUsed)
+                // Reset spell position or remove it after use
+                ResetSpellPosition();
+                ResetAllTileColors();
+                isDragging = false;
+                selectedSpell = null;
+            }
+        }
+
+        private void ResetSpellPosition()
+        {
+            if (selectedSpell != null)
             {
-                selectedSpell.SpellPanel.Parent = gbxSpellsHolder;
                 selectedSpell.SpellPanel.Location = spellOriginalPosition;
             }
+        }
 
-            selectedSpell = null;
+        private BoardTile GetTileAt(Point position)
+        {
+            foreach (BoardTile tile in boardGrid)
+            {
+                if (tile.TilePanel.Bounds.Contains(position))
+                    return tile;
+            }
+            return null;
+        }
+
+        private void ApplySpellEffect(Spell spell, BoardTile tile, ChessPiece piece)
+        {
+ 
+        }
+
+        private void HighlightValidTiles(Spell spell)
+        {
+            foreach (BoardTile tile in boardGrid)
+            {
+                if (IsValidSpellTarget(spell, tile))
+                {
+                    tile.TilePanel.BackColor = Color.Blue; // Example highlight color
+                }
+            }
+        }
+
+        private bool IsValidSpellTarget(Spell spell, BoardTile tile)
+        {
+            // Add logic for valid targets (e.g., Fireball only on occupied tiles)
+            return true;
         }
 
     }
