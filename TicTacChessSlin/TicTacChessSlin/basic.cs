@@ -240,7 +240,7 @@ namespace TicTacChessSlin
 
                 this.Controls.Add(piecePanel);
 
-                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
+                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3, false);
                 displayPieces.Add(newPiece);
 
                 piecePanel.MouseDown += Piece_MouseDown;

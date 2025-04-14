@@ -261,7 +261,15 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, -2, false),
                             new MoveInstruction(-2, 2, false),
                             new MoveInstruction(2, -2, false),
-                            new MoveInstruction(2, 2, false)
+                            new MoveInstruction(2, 2, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(1, 2, false)
                         })
                 },
                 {
@@ -270,7 +278,15 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, -2, false),
                             new MoveInstruction(-2, 2, false),
                             new MoveInstruction(2, -2, false),
-                            new MoveInstruction(2, 2, false)
+                            new MoveInstruction(2, 2, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(1, 2, false)
                         })
                 },
                 {
@@ -532,7 +548,7 @@ namespace TicTacChessSlin
 
                 this.Controls.Add(piecePanel);
 
-                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
+                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3, false);
                 displayPiecesManual.Add(newPiece);
 
                 piecePanel.MouseClick += Piece_MouseClick;

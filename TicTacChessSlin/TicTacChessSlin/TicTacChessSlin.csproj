@@ -257,5 +257,11 @@
   <ItemGroup>
     <None Include="Resources\goblin_hut.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headset.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fly.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

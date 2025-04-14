@@ -203,6 +203,16 @@ namespace TicTacChessSlin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fly {
+            get {
+                object obj = ResourceManager.GetObject("fly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap freeze {
             get {
                 object obj = ResourceManager.GetObject("freeze", resourceCulture);
@@ -256,6 +266,16 @@ namespace TicTacChessSlin.Properties {
         internal static System.Drawing.Bitmap golem {
             get {
                 object obj = ResourceManager.GetObject("golem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap headset {
+            get {
+                object obj = ResourceManager.GetObject("headset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -14,9 +14,11 @@ namespace TicTacChessSlin
         public int Row { get; set; }
         public int Col { get; set; }
 
+        public bool AllowSwap { get; set; }
+
         public List<MoveInstruction> MovementRules { get; }
 
-        public ChessPiece(string pieceName, bool isWhite, Panel piecePanel, int row, int col, List<MoveInstruction> movementRules)
+        public ChessPiece(string pieceName, bool isWhite, Panel piecePanel, int row, int col, List<MoveInstruction> movementRules, bool allowSwap)
         {
             PieceName = pieceName;
             IsWhite = isWhite;
@@ -24,6 +26,7 @@ namespace TicTacChessSlin
             Row = row;
             Col = col;
             MovementRules = movementRules ?? new List<MoveInstruction>();
+            AllowSwap = allowSwap;
         }
 
         private Point GetGridPosition(int row, int col)

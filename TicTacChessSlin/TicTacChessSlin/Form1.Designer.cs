@@ -36,6 +36,7 @@
             this.btnOpenManual = new System.Windows.Forms.Button();
             this.btnOpenBasic = new System.Windows.Forms.Button();
             this.gbxSpellsHolder = new System.Windows.Forms.GroupBox();
+            this.SwitchBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rbTrue
@@ -77,7 +78,7 @@
             // lblTeamsTurn
             // 
             this.lblTeamsTurn.AutoSize = true;
-            this.lblTeamsTurn.Location = new System.Drawing.Point(132, 15);
+            this.lblTeamsTurn.Location = new System.Drawing.Point(122, 14);
             this.lblTeamsTurn.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTeamsTurn.Name = "lblTeamsTurn";
             this.lblTeamsTurn.Size = new System.Drawing.Size(25, 13);
@@ -95,7 +96,7 @@
             // 
             // btnOpenManual
             // 
-            this.btnOpenManual.Location = new System.Drawing.Point(306, 9);
+            this.btnOpenManual.Location = new System.Drawing.Point(399, 9);
             this.btnOpenManual.Name = "btnOpenManual";
             this.btnOpenManual.Size = new System.Drawing.Size(80, 23);
             this.btnOpenManual.TabIndex = 4;
@@ -105,7 +106,7 @@
             // 
             // btnOpenBasic
             // 
-            this.btnOpenBasic.Location = new System.Drawing.Point(401, 9);
+            this.btnOpenBasic.Location = new System.Drawing.Point(494, 9);
             this.btnOpenBasic.Name = "btnOpenBasic";
             this.btnOpenBasic.Size = new System.Drawing.Size(80, 23);
             this.btnOpenBasic.TabIndex = 5;
@@ -122,11 +123,22 @@
             this.gbxSpellsHolder.TabStop = false;
             this.gbxSpellsHolder.Text = "Pick Your Spell";
             // 
+            // SwitchBtn
+            // 
+            this.SwitchBtn.Location = new System.Drawing.Point(253, 9);
+            this.SwitchBtn.Name = "SwitchBtn";
+            this.SwitchBtn.Size = new System.Drawing.Size(80, 23);
+            this.SwitchBtn.TabIndex = 7;
+            this.SwitchBtn.Text = "switch turn";
+            this.SwitchBtn.UseVisualStyleBackColor = true;
+            this.SwitchBtn.Click += new System.EventHandler(this.SwitchBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(866, 534);
+            this.Controls.Add(this.SwitchBtn);
             this.Controls.Add(this.gbxSpellsHolder);
             this.Controls.Add(this.btnOpenBasic);
             this.Controls.Add(this.btnOpenManual);
@@ -153,6 +165,7 @@
         private System.Windows.Forms.Button btnOpenManual;
         private System.Windows.Forms.Button btnOpenBasic;
         private System.Windows.Forms.GroupBox gbxSpellsHolder;
+        private System.Windows.Forms.Button SwitchBtn;
     }
 }
 

@@ -27,9 +27,9 @@ namespace TicTacChessSlin
         private BoardTile[,] boardGrid; // 2D array to store tiles
 
         private List<ChessPiece> displayPieces = new List<ChessPiece>(); // Pieces in the UI display
-        private List<ChessPiece> boardPieces = new List<ChessPiece>(); // Pieces on the board
+        private List<ChessPiece> boardPieces = new List<ChessPiece>();
 
-        private List<Spell> displaySpells = new List<Spell>(); // SPells in the UI display
+        private List<Spell> displaySpells = new List<Spell>(); 
 
         public Form1()
         {
@@ -113,7 +113,7 @@ namespace TicTacChessSlin
 
         private void CreateChessPieces()
         {
-            Dictionary<string, (Image, bool, List<MoveInstruction>)> pieces = new Dictionary<string, (Image, bool, List<MoveInstruction>)>
+            Dictionary<string, (Image, bool, List<MoveInstruction>, bool)> pieces = new Dictionary<string, (Image, bool, List<MoveInstruction>, bool)>
             {
                 {
                     "Wizard", (Properties.Resources.wizard, true, new List<MoveInstruction>
@@ -122,7 +122,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(-1, 1, true),
                             new MoveInstruction(1, -1, true),
                             new MoveInstruction(1, 1, true)
-                        })
+                        }, false)
                 },
                 {
                     "Witch", (Properties.Resources.witch, false, new List<MoveInstruction>
@@ -131,7 +131,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(-1, 1, true),
                             new MoveInstruction(1, -1, true),
                             new MoveInstruction(1, 1, true)
-                        })
+                        }, false)
                 },
                 {
                     "Crossbow", (Properties.Resources.crossbow, false, new List<MoveInstruction>
@@ -140,7 +140,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, 0, true),
                             new MoveInstruction(0, -1, true),
                             new MoveInstruction(0, 1, true)
-                        })
+                        }, false)
                 },
                 {
                     "Inferno_Tower", (Properties.Resources.inferno_tower, true, new List<MoveInstruction>
@@ -149,7 +149,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, 0, true),
                             new MoveInstruction(0, -1, true),
                             new MoveInstruction(0, 1, true)
-                        })
+                        }, false)
                 },
                 {
                     "Fire_Spirit", (Properties.Resources.fire_spirit, true, new List<MoveInstruction>
@@ -158,7 +158,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, 1, false),
                             new MoveInstruction(-1, 0, false),
                             new MoveInstruction(1, 0, false)
-                        })
+                        }, false)
                 },
                 {
                     "Electro_Spirit", (Properties.Resources.electro_spirit, false, new List<MoveInstruction>
@@ -167,7 +167,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, 1, false),
                             new MoveInstruction(-1, 0, false),
                             new MoveInstruction(1, 0, false)
-                        })
+                        }, false)
                 },
                 {
                     "Prince", (Properties.Resources.prince, true, new List<MoveInstruction>
@@ -180,7 +180,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -2, false),
                             new MoveInstruction(-1, 2, false),
                             new MoveInstruction(1, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Dark_Knight", (Properties.Resources.dark_knight, false, new List<MoveInstruction>
@@ -193,7 +193,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -2, false),
                             new MoveInstruction(-1, 2, false),
                             new MoveInstruction(1, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Baby_Dragon", (Properties.Resources.baby_dragon, true, new List<MoveInstruction>
@@ -202,7 +202,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, 1, false),
                             new MoveInstruction(-1, 0, true),
                             new MoveInstruction(1, 0, true)
-                        })
+                        }, false)
                 },
                 {
                     "Electro_Dragon", (Properties.Resources.electro_dragon, false, new List<MoveInstruction>
@@ -211,7 +211,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, 1, false),
                             new MoveInstruction(-1, 0, true),
                             new MoveInstruction(1, 0, true)
-                        })
+                        }, false)
                 },
                 {
                     "Dagger_Dutchess", (Properties.Resources.dagger_dutchess, false, new List<MoveInstruction>
@@ -224,7 +224,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, 1, true),
                             new MoveInstruction(-1, 0, true),
                             new MoveInstruction(1, 0, true)
-                        })
+                        }, false)
                 },
                 {
                     "Chef", (Properties.Resources.chef, true, new List<MoveInstruction>
@@ -237,7 +237,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, 1, true),
                             new MoveInstruction(-1, 0, true),
                             new MoveInstruction(1, 0, true)
-                        })
+                        }, false)
                 },
                 {
                     "Ice_Wizard", (Properties.Resources.ice_wizard, true, new List<MoveInstruction>
@@ -250,7 +250,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(2, 0, false),
                             new MoveInstruction(0, -2, false),
                             new MoveInstruction(0, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Electro_Wizard", (Properties.Resources.electro_wizard, false, new List<MoveInstruction>
@@ -263,7 +263,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(2, 0, false),
                             new MoveInstruction(0, -2, false),
                             new MoveInstruction(0, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Executioner", (Properties.Resources.executioner, true, new List<MoveInstruction>
@@ -271,8 +271,16 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, -2, false),
                             new MoveInstruction(-2, 2, false),
                             new MoveInstruction(2, -2, false),
-                            new MoveInstruction(2, 2, false)
-                        })
+                            new MoveInstruction(2, 2, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(1, 2, false)
+                        }, false)
                 },
                 {
                     "Valkyrie", (Properties.Resources.valkyrie, false, new List<MoveInstruction>
@@ -280,8 +288,16 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, -2, false),
                             new MoveInstruction(-2, 2, false),
                             new MoveInstruction(2, -2, false),
-                            new MoveInstruction(2, 2, false)
-                        })
+                            new MoveInstruction(2, 2, false),
+                            new MoveInstruction(-2, -1, false),
+                            new MoveInstruction(-2, 1, false),
+                            new MoveInstruction(2, -1, false),
+                            new MoveInstruction(2, 1, false),
+                            new MoveInstruction(-1, -2, false),
+                            new MoveInstruction(-1, 2, false),
+                            new MoveInstruction(1, -2, false),
+                            new MoveInstruction(1, 2, false)
+                        }, false)
                 },
                 {
                     "Golem", (Properties.Resources.golem, true, new List<MoveInstruction>
@@ -294,7 +310,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -1, false),
                             new MoveInstruction(1, 0, false),
                             new MoveInstruction(1, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Pekka", (Properties.Resources.pekka, false, new List<MoveInstruction>
@@ -307,7 +323,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -1, false),
                             new MoveInstruction(1, 0, false),
                             new MoveInstruction(1, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Hog_Rider", (Properties.Resources.hog_rider, true, new List<MoveInstruction>
@@ -320,7 +336,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -2, false),
                             new MoveInstruction(-1, 2, false),
                             new MoveInstruction(1, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Ram_Rider", (Properties.Resources.ram_rider, false, new List<MoveInstruction>
@@ -333,7 +349,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -2, false),
                             new MoveInstruction(-1, 2, false),
                             new MoveInstruction(1, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Inferno_Dragon", (Properties.Resources.inferno_dragon, true, new List<MoveInstruction>
@@ -346,7 +362,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, 1, false),
                             new MoveInstruction(2, -1, false),
                             new MoveInstruction(2, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Phoenix", (Properties.Resources.phoenix, false, new List<MoveInstruction>
@@ -359,7 +375,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, 1, false),
                             new MoveInstruction(2, -1, false),
                             new MoveInstruction(2, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Cannon_Cart", (Properties.Resources.cannon_cart, true, new List<MoveInstruction>
@@ -376,7 +392,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, -2, true),
                             new MoveInstruction(2, -2, true),
                             new MoveInstruction(-2, 2, true)
-                        })
+                        }, false)
                 },
                 {
                     "Sparky", (Properties.Resources.sparky, false, new List<MoveInstruction>
@@ -393,7 +409,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(-2, -2, true),
                             new MoveInstruction(2, -2, true),
                             new MoveInstruction(-2, 2, true)
-                        })
+                        }, false)
                 },
                 {
                     "Mega_Knight", (Properties.Resources.mega_knight, true, new List<MoveInstruction>
@@ -414,7 +430,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, -2, false),
                             new MoveInstruction(2, 0, false),
                             new MoveInstruction(0, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Fisherman", (Properties.Resources.fisherman, false, new List<MoveInstruction>
@@ -435,7 +451,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(0, -2, false),
                             new MoveInstruction(2, 0, false),
                             new MoveInstruction(0, 2, false)
-                        })
+                        }, false)
                 },
                 {
                     "Skeleton", (Properties.Resources.skeleton, true, new List<MoveInstruction>
@@ -444,7 +460,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -1, false),
                             new MoveInstruction(-1, -1, false),
                             new MoveInstruction(1, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Goblin", (Properties.Resources.goblins, false, new List<MoveInstruction>
@@ -453,7 +469,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -1, false),
                             new MoveInstruction(-1, -1, false),
                             new MoveInstruction(1, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Furnace", (Properties.Resources.furnace, true, new List<MoveInstruction>
@@ -470,7 +486,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, 0, true),
                             new MoveInstruction(3, -1, false),
                             new MoveInstruction(3, 1, false)
-                        })
+                        }, false)
                 },
                 {
                     "Goblin_Hut", (Properties.Resources.goblin_hut, false, new List<MoveInstruction>
@@ -488,7 +504,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(3, -1, false),
                             new MoveInstruction(3, 1, false)
 
-                        })
+                        }, false)
                 },
                 {
                     "Little_Prince", (Properties.Resources.little_prince, true, new List<MoveInstruction>
@@ -505,7 +521,7 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -1, true),
                             new MoveInstruction(1, -2, true),
                             new MoveInstruction(2, -1, true),
-                        })
+                        }, true)
                 },
                 {
                     "GoblinStein", (Properties.Resources.goblinstein, false, new List<MoveInstruction>
@@ -522,11 +538,12 @@ namespace TicTacChessSlin
                             new MoveInstruction(1, -1, true),
                             new MoveInstruction(1, -2, true),
                             new MoveInstruction(2, -1, true),
-                        })
+                        }, true)
                 },
 
             };
 
+            // makes all the pieces form the list above
             foreach (var piece in pieces)
             {
                 Panel piecePanel = new Panel
@@ -542,7 +559,7 @@ namespace TicTacChessSlin
 
                 this.Controls.Add(piecePanel);
 
-                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3);
+                ChessPiece newPiece = new ChessPiece(piece.Key, piece.Value.Item2, piecePanel, 0, 0, piece.Value.Item3, piece.Value.Item4);
                 displayPieces.Add(newPiece);
 
                 piecePanel.MouseDown += Piece_MouseDown;
@@ -574,7 +591,7 @@ namespace TicTacChessSlin
 
                     count++;
 
-                    if (count % columns == 0)  // Move to the next row after filling a column
+                    if (count % columns == 0)
                     {
                         x = 5;
                         y += spacingY;
@@ -594,6 +611,7 @@ namespace TicTacChessSlin
 
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            // changes the pieces form ? black | white
             if (((System.Windows.Forms.RadioButton)sender).Checked)
             {
                 bool showTruePieces = ((System.Windows.Forms.RadioButton)sender).Tag.ToString() == "true";
@@ -603,9 +621,10 @@ namespace TicTacChessSlin
 
         private List<BoardTile> GetValidMoves(ChessPiece piece)
         {
+            // all the tiles a piece can go to
             List<BoardTile> validMoves = new List<BoardTile>();
 
-            foreach (var rule in piece.MovementRules) // ✅ Now correctly using MovementRules
+            foreach (var rule in piece.MovementRules)
             {
                 int newRow = piece.Row;
                 int newCol = piece.Col;
@@ -617,13 +636,26 @@ namespace TicTacChessSlin
 
                     BoardTile tile = GetTileAt(newRow, newCol);
 
-                    // Stop if out of bounds or occupied
-                    if (tile == null || tile.PieceOnTile != null)
+                    // Stop if the tile is out of bounds.
+                    if (tile == null)
                         break;
 
+                    // If the tile is occupied...
+                    if (tile.PieceOnTile != null)
+                    {
+                        // ...add it if the piece can swap.
+                        if (piece.AllowSwap)
+                        {
+                            validMoves.Add(tile);
+                        }
+                        // After an occupied tile, we break the loop.
+                        break;
+                    }
+
+                    // Add the tile if it's empty.
                     validMoves.Add(tile);
 
-                    // Stop if movement is not infinite (like a Knight or Pawn)
+                    // If movement is not infinite, break out of the loop.
                     if (!rule.IsInfinite)
                         break;
                 }
@@ -634,6 +666,7 @@ namespace TicTacChessSlin
 
         private BoardTile GetTileAt(int row, int col)
         {
+            // goes over the whole board to get a tile.
             if (row >= 0 && row < boardGrid.GetLength(0) && col >= 0 && col < boardGrid.GetLength(1))
             {
                 return boardGrid[row, col];
@@ -692,6 +725,7 @@ namespace TicTacChessSlin
 
         private void Piece_MouseUp(object sender, MouseEventArgs e)
         {
+
             if (!isDragging || selectedPiece == null) return;
             isDragging = false;
 
@@ -700,6 +734,7 @@ namespace TicTacChessSlin
 
             foreach (var tile in boardGrid)
             {
+                // makes a box for the tile
                 Rectangle tileBounds = new Rectangle(tile.TilePanel.Location, tile.TilePanel.Size);
                 if (tileBounds.Contains(mousePosition))
                 {
@@ -708,15 +743,27 @@ namespace TicTacChessSlin
                 }
             }
 
-            if (hoveredTile != null && hoveredTile.PieceOnTile == null && hoveredTile.TilePanel.BackColor == Color.LightGreen)
+            if (hoveredTile != null && hoveredTile.TilePanel.BackColor == Color.LightGreen)
             {
                 if (!ActiveGame)
                 {
-                    // 🔹 Enforce spawn placement before game starts
-                    if ((selectedPiece.IsWhite && hoveredTile.Spawn == "White") ||
-                        (!selectedPiece.IsWhite && hoveredTile.Spawn == "Black"))
+                    // In spawn mode, check that the target tile is the right spawn.
+                    if (hoveredTile.PieceOnTile == null)
                     {
-                        MovePieceToTile(selectedPiece, hoveredTile);
+                        if ((selectedPiece.IsWhite && hoveredTile.Spawn == "White") ||
+                            (!selectedPiece.IsWhite && hoveredTile.Spawn == "Black"))
+                        {
+                            MovePieceToTile(selectedPiece, hoveredTile);
+                        }
+                        else
+                        {
+                            ResetPiecePosition();
+                        }
+                    }
+                    else if (selectedPiece.AllowSwap)
+                    {
+                        // Swap even in spawn mode if allowed.
+                        MovePieceOrSwap(selectedPiece, hoveredTile);
                     }
                     else
                     {
@@ -725,18 +772,38 @@ namespace TicTacChessSlin
                 }
                 else
                 {
-                    // 🔹 Ensure only the correct team moves during the game
-                    if ((selectedPiece.IsWhite && isWhiteTurn) || (!selectedPiece.IsWhite && !isWhiteTurn))
+                    // In ActiveGame mode, allow swap if it's the correct turn and swap is enabled.
+                    if (hoveredTile.PieceOnTile == null)
                     {
-                        MovePieceToTile(selectedPiece, hoveredTile);
-                        isWhiteTurn = !isWhiteTurn;
-                        UpdateTurnLabel();
+                        if ((selectedPiece.IsWhite && isWhiteTurn) || (!selectedPiece.IsWhite && !isWhiteTurn))
+                        {
+                            MovePieceToTile(selectedPiece, hoveredTile);
+                            isWhiteTurn = !isWhiteTurn;
+                            UpdateTurnLabel();
 
-                        CheckForWinner();
+                            CheckForWinner();
+                        }
+                        else
+                        {
+                            ResetPiecePosition();
+                        }
                     }
                     else
                     {
-                        ResetPiecePosition();
+                        // If the tile is occupied and the selected piece allows swapping.
+                        if (selectedPiece.AllowSwap &&
+                            ((selectedPiece.IsWhite && isWhiteTurn) || (!selectedPiece.IsWhite && !isWhiteTurn)))
+                        {
+                            MovePieceOrSwap(selectedPiece, hoveredTile);
+                            isWhiteTurn = !isWhiteTurn;
+                            UpdateTurnLabel();
+
+                            CheckForWinner();
+                        }
+                        else
+                        {
+                            ResetPiecePosition();
+                        }
                     }
                 }
             }
@@ -747,6 +814,52 @@ namespace TicTacChessSlin
 
             ResetAllTileColors();
             selectedPiece = null;
+        }
+
+        private void MovePieceOrSwap(ChessPiece piece, BoardTile targetTile)
+        {
+            // Get the original tile for the moving piece.
+            BoardTile originalTile = GetTileAt(piece.Row, piece.Col);
+
+            if (targetTile.PieceOnTile == null)
+            {
+                if (originalTile != null)
+                {
+                    originalTile.PieceOnTile = null;
+                }
+
+                // Move the piece to the target tile.
+                piece.PiecePanel.Location = targetTile.TilePanel.Location;
+                piece.Row = targetTile.Row;
+                piece.Col = targetTile.Col;
+                targetTile.PieceOnTile = piece;
+            }
+            else
+            {
+                // Swap the pieces.
+                ChessPiece otherPiece = targetTile.PieceOnTile;
+
+                if (originalTile != null)
+                {
+                    originalTile.PieceOnTile = null;
+                }
+                targetTile.PieceOnTile = null;
+
+                // Move the selected piece to the target tile.
+                piece.PiecePanel.Location = targetTile.TilePanel.Location;
+                piece.Row = targetTile.Row;
+                piece.Col = targetTile.Col;
+                targetTile.PieceOnTile = piece;
+
+                // Move the other piece to the original tile of the moving piece.
+                if (originalTile != null)
+                {
+                    otherPiece.PiecePanel.Location = originalTile.TilePanel.Location;
+                    otherPiece.Row = originalTile.Row;
+                    otherPiece.Col = originalTile.Col;
+                    originalTile.PieceOnTile = otherPiece;
+                }
+            }
         }
 
         private void MovePieceToTile(ChessPiece piece, BoardTile tile)
@@ -825,6 +938,16 @@ namespace TicTacChessSlin
             else
             {
                 MessageBox.Show("You need at least 3 pieces for white and 3 pieces with for black to start the game.", "Cannot Start Game", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void SwitchBtn_Click(object sender, EventArgs e)
+        {
+            // manually switch turn
+            if (ActiveGame)
+            {
+                isWhiteTurn = !isWhiteTurn;
+                UpdateTurnLabel();
             }
         }
 
@@ -909,7 +1032,7 @@ namespace TicTacChessSlin
 
             // 🎉 If we reach here, it's a valid win!
             string winningTeam = isWhite ? "White" : "Black";
-            MessageBox.Show($"{winningTeam} wins!");
+            MessageBox.Show($"{winningTeam}, Red Bull geeft je vleugels ");
             return true;
         }
 
@@ -1115,6 +1238,5 @@ namespace TicTacChessSlin
             // Add logic for valid targets (e.g., Fireball only on occupied tiles)
             return true;
         }
-
     }
 }
